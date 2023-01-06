@@ -79,13 +79,14 @@ namespace hlp2
       char line[MAX_LINE_LEN];
       while (ifs.getline(line, MAX_LINE_LEN - 1))
       {
-        words += countwords(line);
-        bytes += countbytes(line);
         lines++;
+        words += countwords(line);
+        bytes += countbytes(line);  
       }
-      total_lines += lines, total_words += words, total_bytes += bytes;
+      bytes+=lines;
       std::cout << std::setw(7);
       std::cout << lines << ' ' << std::setw(7) << words << ' ' << std::setw(7) << bytes << ' ' << std::setw(7) << filename << '\n';
+      total_lines += lines, total_words += words, total_bytes += bytes;
       lines = 0, words = 0, bytes = 0;
     }
     // define function wc here ...
