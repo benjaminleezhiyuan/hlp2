@@ -84,6 +84,7 @@ namespace hlp2
         words += countwords(line);
         bytes += countbytes(line);  
       }
+      ifs.close();
       bytes+=lines; //add back all the '\n'
       std::cout << std::setw(7);
       std::cout << lines << ' ' << std::setw(7) << words << ' ' << std::setw(7) << bytes << ' ' << std::setw(7) << filename << '\n';
