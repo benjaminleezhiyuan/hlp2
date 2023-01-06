@@ -32,8 +32,32 @@ namespace
 // an anonymous namespace ...
 namespace
 {
-  // Declare/define your helper functions here ...
 
+  int countwords(char str[])
+  {
+    int i = 0;
+    int is_word = 0, wordcount = 0;
+    while (str[i] != '\0')
+    {
+      if (str[i] == ' ' || str[i] == '\n' || str[i] == '\t')
+      {
+        is_word = 0;
+      }
+      else if (is_word == 0)
+      {
+        is_word = 1;
+        wordcount++;
+      }
+      i++;
+    }
+    return wordcount;
+  }
+  // Declare/define your helper functions here ...
+  int countbytes(std::string str)
+  {
+    int size = str.size();
+    return size;
+  }
 }
 
 // Now, define function wc in namespace hlp2 ...
@@ -41,9 +65,9 @@ namespace hlp2
 {
   void wc(int argc, char *argv[])
   {
-    int lines = 0, words = 0, bytes = 0; // initialize counters
-    int total_lines = 0, total_words = 0, total_bytes = 0;
-    for (int i = 1; i < argc; i++) // loop to check all text files
+    int lines = 0, words = 0, bytes = 0;                   // initialize counters
+    int total_lines = 0, total_words = 0, total_bytes = 0; // initialize total counters
+    for (int i = 1; i < argc; i++)                         // loop to check all text files
     {
       char const *filename = argv[i]; // set which file to read from first
       std::ifstream ifs(filename, std::ios_base::in);
@@ -55,12 +79,18 @@ namespace hlp2
       char line[MAX_LINE_LEN];
       while (ifs.getline(line, MAX_LINE_LEN - 1))
       {
+        words += countwords(line);
+        bytes += countbytes(line);
         lines++;
       }
-      std::cout << lines << ' ' << words << ' ' << bytes << ' ' << filename << '\n';
+      total_lines += lines, total_words += words, total_bytes += bytes;
+      std::cout << std::setw(7);
+      std::cout << lines << ' ' << std::setw(7) << words << ' ' << std::setw(7) << bytes << ' ' << std::setw(7) << filename << '\n';
       lines = 0, words = 0, bytes = 0;
     }
     // define function wc here ...
-    std::cout << total_lines << ' ' << total_words << ' ' << total_bytes << " Total\n";
+    if (argc > 2)
+      std::cout << std::setw(7) << total_lines << ' ' << std::setw(7) << total_words << ' ' << std::setw(7) << total_bytes << " Total\n";
   }
+
 } // end namespace hlp2
