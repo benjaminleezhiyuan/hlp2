@@ -73,7 +73,8 @@ namespace hlp2
       std::ifstream ifs(filename, std::ios_base::in);
       if (!ifs.is_open())
       {
-        std::cout << "File" << filename << "not found" << std::endl;
+        std::cout << "wc: " << filename << ": No such file" << std::endl;
+        return;
       }
       constexpr size_t MAX_LINE_LEN{2048};
       char line[MAX_LINE_LEN];
@@ -83,7 +84,7 @@ namespace hlp2
         words += countwords(line);
         bytes += countbytes(line);  
       }
-      bytes+=lines;
+      bytes+=lines; //add back all the '\n'
       std::cout << std::setw(7);
       std::cout << lines << ' ' << std::setw(7) << words << ' ' << std::setw(7) << bytes << ' ' << std::setw(7) << filename << '\n';
       total_lines += lines, total_words += words, total_bytes += bytes;
