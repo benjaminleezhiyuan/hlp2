@@ -1,5 +1,29 @@
-// Don't forget to include file-header and function-level Doxygen documentation blocks!!!
-// A handout on documenting code using Doxygen is available on the course web page.
+/*!*****************************************************************************
+\file    wc.cpp
+\author  Benjamin Lee Zhi Yuan
+\par     DP email: benjaminzhiyuan.lee@digipen.edu
+\par     Course: CSD1171
+\par     Section: A
+\date    07-01-23
+
+\brief
+  This source file contains the definition of functions that are specified in 
+  header file wc.hpp and standalone in wc.cpp. These files combine to perform 
+  the counting of lines, words and bytes within text files. The funcions include:
+
+    -countwords
+      Private to this source file and counts the number of words in
+      a given line
+    
+    -countbytes
+      Private to this source file and counts the number of bytes in a given 
+      line.
+
+    -wc
+      Takes a number of txt files and returns the amount of lines, words and bytes
+      for each txt file and also the total of all files combined.
+    
+*******************************************************************************/
 
 // Your definition of function wc can only rely on the following C++ Standard Library headers:
 
@@ -80,20 +104,20 @@ namespace hlp2
       char line[MAX_LINE_LEN];
       while (ifs.getline(line, MAX_LINE_LEN - 1))
       {
-        lines++;
+        if (!ifs.eof())
+          lines++;
         words += countwords(line);
-        bytes += countbytes(line);  
+        bytes += countbytes(line);
       }
       ifs.close();
-      bytes+=lines; //add back all the '\n'
-      std::cout << std::setw(7);
-      std::cout << lines << ' ' << std::setw(7) << words << ' ' << std::setw(7) << bytes << ' ' << std::setw(7) << filename << '\n';
+      bytes += lines; // add back all the '\n'
+      std::cout << std::setw(7) << lines << ' ' << std::setw(7) << words << ' ' << std::setw(7) << bytes << ' ' << std::setw(7) << filename << '\n';
       total_lines += lines, total_words += words, total_bytes += bytes;
       lines = 0, words = 0, bytes = 0;
     }
     // define function wc here ...
     if (argc > 2)
-      std::cout << std::setw(7) << total_lines << ' ' << std::setw(7) << total_words << ' ' << std::setw(7) << total_bytes << " Total\n";
+      std::cout << std::setw(7) << total_lines << ' ' << std::setw(7) << total_words << ' ' << std::setw(7) << total_bytes << " total\n";
   }
 
 } // end namespace hlp2
