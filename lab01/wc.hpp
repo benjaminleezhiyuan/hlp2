@@ -1,7 +1,7 @@
 /*!*****************************************************************************
 \file    wc.hpp
 \author  Benjamin Lee Zhi Yuan
-\par     DP email: benjaminzhiyuan.lee@digipen.edu
+\par     DP email: benjaminzhiyuan.lee
 \par     Course: CSD1171
 \par     Section: A
 \date    07-01-23
