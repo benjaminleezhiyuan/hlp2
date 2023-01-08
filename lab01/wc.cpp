@@ -1,9 +1,10 @@
 /*!*****************************************************************************
 \file    wc.cpp
 \author  Benjamin Lee Zhi Yuan
-\par     DP email: benjaminzhiyuan.lee
+\par     DP email: benjaminzhiyuan.lee@digipen.edu
 \par     Course: CSD1171
 \par     Section: A
+\par     Lab 01
 \date    07-01-23
 
 \brief
@@ -76,30 +77,6 @@ namespace
     }
     return wordcount;
   }
-  
- /*int countwords(char str[])
-  {
-    int i=0,j=0,wordcount=0;
-    while (str[i]!='\0')
-    {
-      if (str[i] == ' ' || str[i] == '\n' || str[i] == '\t')
-      {
-        i++;
-        j=i;
-      }
-      if (str[j] != ' ' || str[j] != '\n' || str[j] != '\t')
-      {
-        j++;
-        i=j;
-      }
-
-      if (str[j] == ' ' || str[j] == '\n' || str[j] == '\t')
-      {
-        wordcount++;
-      }
-    }
-    return wordcount;
-  }*/
   // Declare/define your helper functions here ...
   int countbytes(std::string str)
   {
