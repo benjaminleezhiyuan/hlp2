@@ -76,6 +76,30 @@ namespace
     }
     return wordcount;
   }
+  
+ /*int countwords(char str[])
+  {
+    int i=0,j=0,wordcount=0;
+    while (str[i]!='\0')
+    {
+      if (str[i] == ' ' || str[i] == '\n' || str[i] == '\t')
+      {
+        i++;
+        j=i;
+      }
+      if (str[j] != ' ' || str[j] != '\n' || str[j] != '\t')
+      {
+        j++;
+        i=j;
+      }
+
+      if (str[j] == ' ' || str[j] == '\n' || str[j] == '\t')
+      {
+        wordcount++;
+      }
+    }
+    return wordcount;
+  }*/
   // Declare/define your helper functions here ...
   int countbytes(std::string str)
   {
