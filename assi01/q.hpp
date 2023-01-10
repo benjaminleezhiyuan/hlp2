@@ -5,8 +5,13 @@
 // If there any includes in this file, the auto grade will not
 // accept the submission.
 
-namespace hlp2 {
+namespace hlp2
+{
   // declare function q here ...
+  void q(char *output, char *input)
+  {
+    
+  }
 }
 
 #endif

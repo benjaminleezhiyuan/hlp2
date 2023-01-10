@@ -11,6 +11,7 @@
 // these three header files [even in comments]!!!
 // You're warned!!!
 
-namespace hlp2 {
+namespace hlp2
+{
   // provide definition of q here ...
 }
