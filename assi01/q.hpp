@@ -8,9 +8,9 @@
 namespace hlp2
 {
   // declare function q here ...
-  void q(char *output, char *input)
+  void q(char const *output, char const *input)
   {
-    
+
   }
 }
 
