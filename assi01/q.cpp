@@ -9,7 +9,7 @@
 
 \brief
   This source file contains the definition of functions that are specified in
-  header file q.hpp and standalone in wc.cpp. These files combine to perform
+  header file q.hpp and standalone in q.cpp. These files combine to perform
   the counting of total characters, lettres, white spaces, digits and other characters.
 
     -q
@@ -84,21 +84,18 @@ namespace
 namespace hlp2
 {
   // provide definition of q here ...
-  void q(char const *output, char const *input)
+  void q(char const *input, char const *output)
   {
-    char const *inputfile = input;
-    char const *outputfile = output;
-
-    std::ifstream ifs(inputfile, std::ios_base::in);
-    std::ofstream ofs(outputfile, std::ios_base::out);
+    std::ifstream ifs(input, std::ios_base::in);
+    std::ofstream ofs(output, std::ios_base::out);
 
     if (!ifs.is_open())
     {
-      std::cout << input << "File " << inputfile << " not found.\n";
+      std::cout << "File " << input << " not found.\n";
     }
     if (!ofs.is_open())
     {
-      std::cout << output << "Unable to create output file " << outputfile << ".\n";
+      std::cout << "Unable to create output file " << output << ".\n";
     }
     // Counting
     int characters = 0, letters = 0, whitespaces = 0, digits = 0, others = 0;
@@ -108,7 +105,7 @@ namespace hlp2
     char ch;
 
     // Letter Array
-    int fill = 'a';
+    char fill = 'a';
     int indv_letter[26];
     float letter_percentage[26];
     char letter_array[26];
@@ -126,17 +123,33 @@ namespace hlp2
     while (ifs.get(ch))
     {
       // counter for needed stats
-      if (ch >= 'a' && ch <= 'z')
+      if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z'))
       {
-        letters++;
-        lower++;
+        // Letter Stats
+        for (int i = 0; i < 26; i++)
+        {
+          if (ch == letter_array[i])
+          {
+            indv_letter[i]++;
+            lower++;
+            letters++;
+          }
+        }
+        for (int i = 0; i < 26; i++)
+        {
+          if (ch == letter_array[i] - 32)
+          {
+            indv_letter[i]++;
+            upper++;
+            letters++;
+          }
+        }
+        for (int i = 0; i < 26; i++)
+        {
+          letter_percentage[i] = 100.0 * indv_letter[i] / letters;
+        }
       }
-      else if (ch >= 'A' && ch <= 'Z')
-      {
-        letters++;
-        upper++;
-      }
-      else if (ch == ' ' || ch == '\t')
+      else if (ch == ' ' || ch == '\t' || ch == '\n')
       {
         whitespaces++;
       }
@@ -149,19 +162,6 @@ namespace hlp2
         others++;
       }
       characters++;
-
-      // Letter Stats
-      for (int i = 0; i < 26; i++)
-      {
-        if (ch == letter_array[i])
-        {
-          indv_letter[i]++;
-        }
-      }
-      for (int i = 0; i < 26; i++)
-      {
-        letter_percentage[i] = 100.0 * indv_letter[i] / letters;
-      }
 
       // Integer counter
       if (!(ch >= '0' && ch <= '9'))
@@ -177,7 +177,7 @@ namespace hlp2
     ifs.close();
 
     // Read inputfile line by line
-    ifs.open(inputfile, std::ios_base::in);
+    ifs.open(input, std::ios_base::in);
     constexpr size_t MAX_LINE_LEN{2048};
     char line[MAX_LINE_LEN];
     int integer_sum = 0;
@@ -186,7 +186,11 @@ namespace hlp2
     {
       integer_sum += extract_integers(line);
     }
-    integer_avg = 1.0 * integer_sum / integer;
+    if (integer > 0)
+    {
+      integer_avg = 1.0 * integer_sum / integer;
+    }
+
     ifs.close();
 
     // Calculations
@@ -197,59 +201,64 @@ namespace hlp2
     upper_total = percentage * upper / letters;
     lower_total = percentage * lower / letters;
 
-    ofs << "Statistics for file: " << inputfile << std::endl;
-    for (int i = 0; i < 70; i++)
+    ofs << "Statistics for file: " << input << std::endl;
+    for (int i = 0; i < 69; i++)
     {
       ofs << "-";
-      if (i == 69)
+      if (i == 68)
         ofs << std::endl
             << std::endl;
     }
     ofs << "Total # of characters in file: " << characters << std::endl
         << std::endl;
-    ofs << "Category" << std::setw(28) << "How many in file" << std::setw(23) << "% of file\n";
+    ofs << "Category" << std::setw(28) << "How many in file" << std::setw(22) << "% of file" << std::endl;
 
-    for (int i = 0; i < 70; i++)
+    for (int i = 0; i < 69; i++)
     {
       ofs << "-";
-      if (i == 69)
+      if (i == 68)
         ofs << std::endl;
     }
     ofs << std::fixed << std::setprecision(2);
-    ofs << "Letters" << std::setw(29) << letters << std::setw(20) << letters_total << " %\n";
-    ofs << "White space" << std::setw(25) << whitespaces << std::setw(20) << whitespaces_total << " %\n";
-    ofs << "Digits" << std::setw(30) << digits << std::setw(20) << digits_total << " %\n";
-    ofs << "Other characters" << std::setw(20) << others << std::setw(20) << others_total << " %\n \n \n";
+    ofs << "Letters" << std::setw(29) << letters << std::setw(20) << letters_total << " %" << std::endl;
+    ofs << "White space" << std::setw(25) << whitespaces << std::setw(20) << whitespaces_total << " %" << std::endl;
+    ofs << "Digits" << std::setw(30) << digits << std::setw(20) << digits_total << " %" << std::endl;
+    ofs << "Other characters" << std::setw(20) << others << std::setw(20) << others_total << " %" << std::endl
+        << std::endl
+        << std::endl;
 
-    ofs << "LETTER STATISTICS \n \n";
-    ofs << "Category" << std::setw(28) << "How many in file" << std::setw(23) << "% of all letters\n";
+    ofs << "LETTER STATISTICS" << std::endl
+        << std::endl;
+    ofs << "Category" << std::setw(28) << "How many in file" << std::setw(22) << "% of all letters" << std::endl;
 
-    for (int i = 0; i < 70; i++)
+    for (int i = 0; i < 69; i++)
     {
       ofs << "-";
-      if (i == 69)
+      if (i == 68)
         ofs << std::endl;
     }
 
-    ofs << "Uppercase" << std::setw(27) << upper << std::setw(20) << upper_total << " %\n";
-    ofs << "Lowercase" << std::setw(27) << lower << std::setw(20) << lower_total << " %\n";
+    ofs << "Uppercase" << std::setw(27) << upper << std::setw(20) << upper_total << " %" << std::endl;
+    ofs << "Lowercase" << std::setw(27) << lower << std::setw(20) << lower_total << " %" << std::endl;
 
     for (int i = 0; i < 26; i++)
     {
-      ofs << letter_array[i] << std::setw(35) << indv_letter[i] << std::setw(20) << letter_percentage[i] << " %\n";
+      ofs << letter_array[i] << std::setw(35) << indv_letter[i] << std::setw(20) << letter_percentage[i] << " %" << std::endl;
       if (i == 25)
-        ofs << "\n \n";
+        ofs << std::endl
+            << std::endl;
     }
     ofs << std::left;
-    ofs << "NUMBER ANALYSIS\n \n";
-    ofs << std::setw(37) << "Number of integers in file:" << integer << "\n";
-    ofs << std::setw(37) << "Sum of integers:" << integer_sum << "\n";
-    ofs << std::setw(37) << "Average of integers:" << integer_avg << "\n";
+    ofs << "NUMBER ANALYSIS" << std::endl
+        << std::endl;
+    ofs << std::setw(37) << "Number of integers in file:" << integer << std::endl;
+    ofs << std::setw(37) << "Sum of integers:" << integer_sum << std::endl;
+    ofs << std::setw(37) << "Average of integers:" << integer_avg << std::endl;
 
-    for (int i = 0; i < 70; i++)
+    for (int i = 0; i < 69; i++)
     {
       ofs << "_";
-      if (i == 69)
+      if (i == 68)
         ofs << std::endl;
     }
 

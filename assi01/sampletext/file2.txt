@@ -1,3 +1,53 @@
-Hello. How are you?
-I am 4 years old. My favorite color is blue.
-Next year I will be 5. My IP address is 128.4.0.46
+Statistics for file: file1output.txt
+---------------------------------------------------------------------
+
+Total # of characters in file: 2532
+
+Category            How many in file              % of file
+---------------------------------------------------------------------
+Letters                          281               11.10 %
+White space                     1752               69.19 %
+Digits                           148                5.85 %
+Other characters                 351               13.86 %
+
+
+LETTER STATISTICS
+
+Category            How many in file       % of all letters
+---------------------------------------------------------------------
+Uppercase                         45               16.01 %
+Lowercase                        236               83.99 %
+a                                 21                7.47 %
+b                                  3                1.07 %
+c                                 12                4.27 %
+d                                  2                0.71 %
+e                                 37               13.17 %
+f                                 15                5.34 %
+g                                  8                2.85 %
+h                                  7                2.49 %
+i                                 23                8.19 %
+j                                  1                0.36 %
+k                                  1                0.36 %
+l                                 17                6.05 %
+m                                  7                2.49 %
+n                                 13                4.63 %
+o                                 15                5.34 %
+p                                  5                1.78 %
+q                                  1                0.36 %
+r                                 20                7.12 %
+s                                 22                7.83 %
+t                                 29               10.32 %
+u                                  5                1.78 %
+v                                  2                0.71 %
+w                                  5                1.78 %
+x                                  3                1.07 %
+y                                  6                2.14 %
+z                                  1                0.36 %
+
+
+NUMBER ANALYSIS
+
+Number of integers in file:          102
+Sum of integers:                     2208
+Average of integers:                 21.65
+_____________________________________________________________________
