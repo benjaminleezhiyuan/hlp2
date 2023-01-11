@@ -8,14 +8,14 @@
 \date    10-01-23
 
 \brief
-  This source file contains the definition of functions that are specified in 
-  header file q.hpp and standalone in wc.cpp. These files combine to perform 
+  This source file contains the definition of functions that are specified in
+  header file q.hpp and standalone in wc.cpp. These files combine to perform
   the counting of total characters, lettres, white spaces, digits and other characters.
 
     -q
       Private to this source file and counts the number of words in
       a given line.
-    
+
     -extract_integers
       Private to this source file and extracts integers from a given line.
 *******************************************************************************/
@@ -94,11 +94,11 @@ namespace hlp2
 
     if (!ifs.is_open())
     {
-      std::cout << input << ": No such file\n";
+      std::cout << input << "File " << inputfile << " not found.\n";
     }
     if (!ofs.is_open())
     {
-      std::cout << output << ": Failed to create file\n";
+      std::cout << output << "Unable to create output file " << outputfile << ".\n";
     }
     // Counting
     int characters = 0, letters = 0, whitespaces = 0, digits = 0, others = 0;
