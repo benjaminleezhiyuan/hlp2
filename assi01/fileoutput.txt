@@ -11,8 +11,8 @@ Digits                             9                7.76 %
 Other characters                   8                6.90 %
 
 
-LETTER STATISTICS 
- 
+LETTER STATISTICS
+
 Category            How many in file      % of all letters
 ---------------------------------------------------------------------
 Uppercase                          9               12.16 %
@@ -44,9 +44,9 @@ x                                  1                1.35 %
 y                                  5                6.76 %
 z                                  0                0.00 %
 
- 
+
 NUMBER ANALYSIS
- 
+
 Number of integers in file:          6
 Sum of integers:                     187
 Average of integers:                 31.17
