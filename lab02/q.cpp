@@ -35,28 +35,30 @@ namespace hlp2 {
     std::string line;//line to read data.
     while(getline(ifs,line))
     { std::string temp;
-      for(int i=1;i<7;i++)
+      for(int i=1;i<6;i++)
       {
         ifs >> temp;
         switch (i)
         {
           case 1:
-          data->month = stoi(temp);
+          (data+i)->month = stoi(temp);
           break;
           case 2:
-          data->day = stoi(temp);
+          (data+i)->day = stoi(temp);
           break;
           case 3:
-          data->year = stoi(temp);
+          (data+i)->year = stoi(temp);
           break;
           case 4:
-          data->fatalities = stoi(temp);
+          (data+i)->fatalities = stoi(temp);
           break;
           case 5:
-          data->maxwave = stod(temp);
+          (data+i)->maxwave = stod(temp);
           break;
         }
       }
+
+          std::cout << data[1].day;
           std::string extract;
           size_t pos_1 = line.find_first_of("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
           size_t pos_2 = line.find_last_of("abcdefghijklmnopqrstuvwxyz");
