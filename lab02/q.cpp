@@ -5,75 +5,98 @@
 #include <iomanip>
 #include <fstream>
 #include <string>
+
 #include "q.hpp" // compiler needs definition of type Tsunami
 
 // anonymous namespace for any helper functions that you wish to implement
-namespace {
-  // ...
+namespace
+{
+  std::string &trim(std::string &string) // remove leading and trailing whitespaces
+  {
+    size_t p = string.find_first_not_of(" ");
+    string.erase(0, p);
+    p = string.find_last_not_of(" ");
+    if (p != std::string::npos)
+    {
+      string.erase(p + 1);
+    }
+    return string;
+  }
 }
 
-namespace hlp2 {
+namespace hlp2
+{
   // provide definitions of functions declared in q.hpp here ...
-
-  Tsunami* read_tsunami_data(std::string const& file_name, int& max_cnt)
+  Tsunami *read_tsunami_data(std::string const &file_name, int &max_cnt)
   {
-    std::ifstream ifs(file_name,std::ios_base::in);
-    if(!ifs.is_open())
+    std::ifstream ifs(file_name);
+    if (!ifs)
     {
-      return NULL;
+      // input file doesn't exist
+      max_cnt = 0;
+      return nullptr;
     }
-
-    //Count how many elements neede.
-    max_cnt=0;
-    std::string elementcount;
-    while (getline(ifs,elementcount))
+    // determine number of tsunami events in input file
+    std::string line;
+    int count = 0;
+    while (std::getline(ifs, line))
     {
-      max_cnt++;
+      count++;
     }
-
-    Tsunami *data = new Tsunami [max_cnt]; //Allocate array for tsunami data
-    std::string line;//line to read data.
-    while(getline(ifs,line))
-    { std::string temp;
-      for(int i=1;i<6;i++)
-      {
-        ifs >> temp;
-        switch (i)
-        {
-          case 1:
-          (data+i)->month = stoi(temp);
-          break;
-          case 2:
-          (data+i)->day = stoi(temp);
-          break;
-          case 3:
-          (data+i)->year = stoi(temp);
-          break;
-          case 4:
-          (data+i)->fatalities = stoi(temp);
-          break;
-          case 5:
-          (data+i)->maxwave = stod(temp);
-          break;
-        }
-      }
-
-          std::cout << data[1].day;
-          std::string extract;
-          size_t pos_1 = line.find_first_of("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-          size_t pos_2 = line.find_last_of("abcdefghijklmnopqrstuvwxyz");
-          extract = line.substr(pos_1, ((pos_2+1)));
-          std::cout << extract << std::endl;
-          data->geo = extract;
-          break;
+    max_cnt = count;
+    // allocate dataay of Tsunami objects
+    Tsunami *data = new Tsunami[max_cnt];
+    // read data for each tsunami event
+    ifs.clear();
+    ifs.seekg(0, std::ios::beg);
+    for (int i = 0; i < max_cnt; i++)
+    {
+      ifs >> data[i].month;
+      ifs >> data[i].day;
+      ifs >> data[i].year;
+      ifs >> data[i].fatalities;
+      ifs >> data[i].maxwave;
+      std::getline(ifs, data[i].geo);
+      trim(data[i].geo);
     }
-    
     return data;
-
   }
-  void print_tsunami_data(Tsunami const *arr,int size, std::string const& file_name)
+
+  void print_tsunami_data(Tsunami const *data, int size, std::string const &file_name)
   {
-    std::ofstream ofs(file_name,std::ios_base::out);
-    std::cout << size << arr <<  std::endl;
+    std::ofstream ofs(file_name);
+    // Wave calculations
+    double maxwave = 0.0f, averagewave = 0.0f, wavetotal = 0.0f;
+    // print header
+    ofs << "List of tsunamis:\n";
+    ofs << "-----------------\n";
+    for (int i = 0; i < size; i++)
+    {
+      ofs << std::right << std::setw(2) << std::setfill('0') << data[i].month << " ";
+      ofs << std::setw(2) << std::setfill('0') << data[i].day << " ";
+      ofs << std::setw(4) << data[i].year << " ";
+      ofs << std::setw(6) << std::setfill(' ') << data[i].fatalities << " ";
+      ofs << std::setw(10) << std::setprecision(2) << std::fixed << data[i].maxwave << "     ";
+      ofs << std::left << data[i].geo << std::endl;
+
+      wavetotal += data[i].maxwave;
+      maxwave = data[i].maxwave > maxwave ? data[i].maxwave : maxwave;
+    }
+    averagewave = wavetotal / size;
+    ofs << "\n";
+    ofs << "Summary information for tsunamis\n";
+    ofs << "--------------------------------\n\n";
+    ofs << "Maximum wave height (in meters): " << std::right << std::setw(5) << maxwave << std::endl
+        << std::endl;
+    ofs << "Average wave height (in meters): " << std::right << std::setw(5) << averagewave << std::endl
+        << std::endl;
+    ofs << std::right << std::setw(38) << "Tsunamis with greater than average height " << averagewave << ":\n";
+    for (int i = 0; i < size; i++)
+    {
+      if (data[i].maxwave > averagewave)
+      {
+        ofs << data[i].maxwave << "     " << data[i].geo << std::endl;
+      }
+    }
   }
 }

@@ -3,7 +3,6 @@
 //#define Q_HPP
 #include <string> // to use C++ standard library std::string type
 #include <fstream> // to use C++ file I/O interface
-
 #include <iomanip>
 // other C++ [not C] standard library headers
 #include "q.hpp"
