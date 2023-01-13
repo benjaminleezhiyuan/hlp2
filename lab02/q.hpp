@@ -10,12 +10,12 @@ namespace hlp2 {
   struct Tsunami {
     // declare data members ...
 
-    numbers month;
+    int month;
     int day;
     int year;
     int fatalities;
     double maxwave;
-    unsigned char geo[80];
+    std::string geo;
   };
   
   // declaration of interface functions ...
