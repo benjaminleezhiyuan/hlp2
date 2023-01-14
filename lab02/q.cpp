@@ -12,6 +12,9 @@
   header file q.hpp and standalone in q.cpp. These files combine to perform
   the counting of total characters, letters, white spaces, digits and other characters.
 
+    -trim
+      Deletes leading spaces from string.
+
     -read_tsunami_data
       Reads tsunami data from text file and stores them in a dynamically allocated
       array
@@ -35,6 +38,27 @@
 namespace
 {
 
+  /*!**************************************************************************
+\brief
+    Reads string from input
+
+\param[in] string
+    String to trim
+
+\return
+    String with leading spaces removed.
+****************************************************************************/
+  std::string &trim(std::string &string) // remove leading and trailing whitespaces
+  {
+    size_t p = string.find_first_not_of(" ");
+    string.erase(0, p);
+    p = string.find_last_not_of(" ");
+    if (p != std::string::npos)
+    {
+      string.erase(p + 1);
+    }
+    return string;
+  }
 }
 
 namespace hlp2
@@ -70,6 +94,7 @@ namespace hlp2
       ifs >> data[i].fatalities;
       ifs >> data[i].maxwave;
       std::getline(ifs, data[i].geo);
+      trim(data[i].geo);
     }
     return data;
   }
