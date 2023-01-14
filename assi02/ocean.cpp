@@ -1,6 +1,7 @@
 #include "ocean.h"
 #include <iostream> // std::cout
 #include <iomanip>  // std::setw
+using namespace std;
 
 namespace HLP2
 {
@@ -32,10 +33,95 @@ namespace HLP2
         If true, the boats are shown in the output. (Debugging feature)
     */
     /**************************************************************************/
-    void DumpOcean(const HLP2::WarBoats::Ocean &ocean,
-                   int field_width,
-                   bool extraline,
-                   bool showboats)
+    Ocean *CreateOcean(int num_boats, int x_size, int y_size)
+    {
+      Ocean *ocean = new Ocean;
+      ocean->grid = new int[x_size * y_size]();
+      ocean->boats = new Boat[num_boats];
+      ocean->boats->hits = 0;
+      ocean->boats->ID = 0;
+      ocean->num_boats = num_boats;
+      ocean->x_size = x_size;
+      ocean->y_size = y_size;
+      ocean->stats.hits = 0;
+      ocean->stats.misses = 0;
+      ocean->stats.duplicates = 0;
+      ocean->stats.sunk = 0;
+      return ocean;
+    }
+
+    void DestroyOcean(Ocean *theOcean)
+    {
+      delete theOcean;
+      return;
+    }
+
+    BoatPlacement PlaceBoat(Ocean &ocean, Boat const &boat)
+    {
+      if (ocean.boats->ID >= ocean.num_boats)
+        return bpREJECTED;
+      if (boat.orientation == oHORIZONTAL)
+      {
+        if ((boat.position.x <= ocean.x_size - BOAT_LENGTH || boat.position.x >= 0) && (boat.position.y <= ocean.y_size || boat.position.y >= 0))
+        {
+          for (int i = 0; i < BOAT_LENGTH; i++)
+            if (ocean.grid[boat.position.y * ocean.x_size + boat.position.x + i] != 0)
+              return bpREJECTED;
+          ocean.boats->ID++;
+          for (int i = 0; i < BOAT_LENGTH; i++)
+            ocean.grid[boat.position.y * ocean.x_size + boat.position.x + i] = ocean.boats->ID;
+        }
+      }
+      else if (boat.orientation == oVERTICAL)
+      {
+        if ((boat.position.y <= ocean.y_size - BOAT_LENGTH || boat.position.y >= 0) && (boat.position.x <= ocean.x_size || boat.position.x >= 0))
+        {
+          for (int i = 0; i < BOAT_LENGTH; i++)
+            if (ocean.grid[(boat.position.y + i) * ocean.x_size + boat.position.x] != 0)
+              return bpREJECTED;
+          ocean.boats->ID++;
+          for (int i = 0; i < BOAT_LENGTH; i++)
+            ocean.grid[(boat.position.y + i) * ocean.x_size + boat.position.x] = ocean.boats->ID;
+        }
+      }
+      return bpACCEPTED;
+    }
+
+    ShotResult TakeShot(Ocean &ocean, Point const &coordinate)
+    {
+      if (!((coordinate.x <= ocean.x_size && coordinate.x >= 0) && (coordinate.y <= ocean.y_size && coordinate.y >= 0)))
+        return srILLEGAL;
+      if (ocean.grid[coordinate.y * ocean.x_size + coordinate.x] == dtOK)
+      {
+        ocean.stats.misses++;
+        ocean.grid[coordinate.y * ocean.x_size + coordinate.x] = dtBLOWNUP;
+        return srMISS;
+      }
+      else if ((ocean.grid[coordinate.y * ocean.x_size + coordinate.x] == dtBLOWNUP) || (ocean.grid[coordinate.y * ocean.x_size + coordinate.x] >= 1 + HIT_OFFSET && ocean.grid[coordinate.y * ocean.x_size + coordinate.x] <= 99 + HIT_OFFSET))
+      {
+        ocean.stats.duplicates++;
+        return srDUPLICATE;
+      }
+      else if (ocean.grid[coordinate.y * ocean.x_size + coordinate.x] >= 1 || ocean.grid[coordinate.y * ocean.x_size + coordinate.x] <= 99)
+      {
+        ocean.stats.hits++;
+        ocean.boats[ocean.grid[coordinate.y * ocean.x_size + coordinate.x] - 1].hits++;
+        ocean.grid[coordinate.y * ocean.x_size + coordinate.x] += HIT_OFFSET;
+        if (ocean.boats[ocean.grid[coordinate.y * ocean.x_size + coordinate.x] - 101].hits == BOAT_LENGTH)
+        {
+          ocean.stats.sunk++;
+          return srSUNK;
+        }
+      }
+      return srHIT;
+    }
+
+    ShotStats GetShotStats(Ocean const &ocean)
+    {
+      return ocean.stats;
+    }
+
+    void DumpOcean(const HLP2::WarBoats::Ocean &ocean, int field_width, bool extraline, bool showboats)
     {
       for (int y = 0; y < ocean.y_size; y++)
       { // For each row
@@ -53,31 +139,6 @@ namespace HLP2
           std::cout << "\n";
         }
       }
-    }
-
-    Ocean *CreateOcean(int num_boats, int x_size, int y_size)
-    {
-      
-    }
-
-    void DestroyOcean(Ocean *theOcean)
-    {
-
-    }
-
-    BoatPlacement PlaceBoat(Ocean& ocean, Boat const& boat)
-    {
-
-    }
-
-    ShotResult TakeShot(Ocean& ocean, Point const& coordinate)
-    {
-
-    }
-
-    ShotStats GetShotStats(Ocean const& ocean)
-    {
-
     }
   } // namespace WarBoats
 } // namespace HLP2
