@@ -50,12 +50,20 @@ namespace HLP2
       return ocean;
     }
 
+    /// @brief
+    /// @param theOcean
     void DestroyOcean(Ocean *theOcean)
     {
+      delete[] theOcean->boats;
+      delete[] theOcean->grid;
       delete theOcean;
       return;
     }
 
+    /// @brief
+    /// @param ocean
+    /// @param coordinate
+    /// @return
     ShotResult TakeShot(Ocean &ocean, Point const &coordinate)
     {
       if (!((coordinate.x <= ocean.x_size && coordinate.x >= 0) && (coordinate.y <= ocean.y_size && coordinate.y >= 0)))
@@ -85,6 +93,10 @@ namespace HLP2
       return srHIT;
     }
 
+    /// @brief
+    /// @param ocean
+    /// @param boat
+    /// @return
     BoatPlacement PlaceBoat(Ocean &ocean, Boat const &boat)
     {
       if (ocean.boats->ID >= ocean.num_boats)
@@ -116,6 +128,9 @@ namespace HLP2
       return bpACCEPTED;
     }
 
+    /// @brief
+    /// @param ocean
+    /// @return
     ShotStats GetShotStats(Ocean const &ocean)
     {
       return ocean.stats;
