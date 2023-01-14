@@ -1,3 +1,26 @@
+/*!*****************************************************************************
+\file    q.cpp
+\author  Benjamin Lee Zhi Yuan
+\par     DP email: benjaminzhiyuan.lee
+\par     Course: CSD1171
+\par     Section: A
+\par     Lab 02
+\date    13-01-23
+
+\brief
+  This source file contains the definition of functions that are specified in
+  header file q.hpp and standalone in q.cpp. These files combine to perform
+  the counting of total characters, letters, white spaces, digits and other characters.
+
+    -read_tsunami_data
+      Reads tsunami data from text file and stores them in a dynamically allocated
+      array
+
+    -print_tsunami_data
+      Prints results of data to text file.
+
+*******************************************************************************/
+
 // This file can only have these 5 files included and therefore you should not
 // remove the following include directives nor provide additional include directives!!!
 
@@ -11,17 +34,7 @@
 // anonymous namespace for any helper functions that you wish to implement
 namespace
 {
-  std::string &trim(std::string &string) // remove leading and trailing whitespaces
-  {
-    size_t p = string.find_first_not_of(" ");
-    string.erase(0, p);
-    p = string.find_last_not_of(" ");
-    if (p != std::string::npos)
-    {
-      string.erase(p + 1);
-    }
-    return string;
-  }
+
 }
 
 namespace hlp2
@@ -57,7 +70,6 @@ namespace hlp2
       ifs >> data[i].fatalities;
       ifs >> data[i].maxwave;
       std::getline(ifs, data[i].geo);
-      trim(data[i].geo);
     }
     return data;
   }
