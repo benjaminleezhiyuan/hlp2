@@ -37,8 +37,7 @@
 // anonymous namespace for any helper functions that you wish to implement
 namespace
 {
-
-  /*!**************************************************************************
+/*
 \brief
     Reads string from input
 

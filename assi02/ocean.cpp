@@ -50,8 +50,14 @@ namespace HLP2
       return ocean;
     }
 
-    /// @brief
-    /// @param theOcean
+    /*! \brief
+          Free memory that was previously allocated
+    /// \param theOcean
+          Which ocean to free
+
+        \return
+          void
+    */
     void DestroyOcean(Ocean *theOcean)
     {
       delete[] theOcean->boats;
@@ -60,10 +66,14 @@ namespace HLP2
       return;
     }
 
-    /// @brief
-    /// @param ocean
-    /// @param coordinate
-    /// @return
+    /*! 
+        \brief
+          
+        \param 
+          
+        \return
+          
+    */
     ShotResult TakeShot(Ocean &ocean, Point const &coordinate)
     {
       if (!((coordinate.x <= ocean.x_size && coordinate.x >= 0) && (coordinate.y <= ocean.y_size && coordinate.y >= 0)))
@@ -93,10 +103,14 @@ namespace HLP2
       return srHIT;
     }
 
-    /// @brief
-    /// @param ocean
-    /// @param boat
-    /// @return
+    /*! 
+        \brief
+          
+        \param 
+          
+        \return
+          
+    */
     BoatPlacement PlaceBoat(Ocean &ocean, Boat const &boat)
     {
       if (ocean.boats->ID >= ocean.num_boats)
@@ -128,14 +142,28 @@ namespace HLP2
       return bpACCEPTED;
     }
 
-    /// @brief
-    /// @param ocean
-    /// @return
+    /*! 
+        \brief
+          
+        \param 
+          
+        \return
+          
+    */
     ShotStats GetShotStats(Ocean const &ocean)
     {
       return ocean.stats;
     }
 
+
+    /*! 
+        \brief
+          
+        \param 
+          
+        \return
+          
+    */   
     void DumpOcean(const HLP2::WarBoats::Ocean &ocean, int field_width, bool extraline, bool showboats)
     {
       for (int y = 0; y < ocean.y_size; y++)
