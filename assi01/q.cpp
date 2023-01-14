@@ -40,6 +40,16 @@ namespace
 
 namespace
 {
+/*!**************************************************************************
+\brief
+    Extracts integers from string
+
+\param[in] str
+    String to extract integers from
+
+\return
+    Integers found in string
+****************************************************************************/
   int extract_integers(std::string str)
   {
     int length = str.size();

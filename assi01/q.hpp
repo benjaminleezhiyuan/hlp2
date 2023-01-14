@@ -4,6 +4,7 @@
 \par     DP email: benjaminzhiyuan.lee
 \par     Course: CSD1171
 \par     Section: A
+\par     Assignment 01
 \date    10-01-23
 
 \brief
@@ -21,6 +22,19 @@
 namespace hlp2
 {
   // declare function q here ...
+/*!**************************************************************************
+\brief
+    Reads text files and writes to textfile
+
+\param[in] input
+    Name of text file to be read from.
+
+\param[in] output
+    Name of text file to be written to.
+
+\return
+    Total characters in text file and all their stats.
+****************************************************************************/
   void q(char const *input, char const *output);
 }
 
