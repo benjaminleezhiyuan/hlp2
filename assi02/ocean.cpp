@@ -66,44 +66,7 @@ namespace HLP2
       return;
     }
 
-    /*! 
-        \brief
-          
-        \param 
-          
-        \return
-          
-    */
-    ShotResult TakeShot(Ocean &ocean, Point const &coordinate)
-    {
-      if (!((coordinate.x <= ocean.x_size && coordinate.x >= 0) && (coordinate.y <= ocean.y_size && coordinate.y >= 0)))
-        return srILLEGAL;
-      if (ocean.grid[coordinate.y * ocean.x_size + coordinate.x] == dtOK)
-      {
-        ocean.stats.misses++;
-        ocean.grid[coordinate.y * ocean.x_size + coordinate.x] = dtBLOWNUP;
-        return srMISS;
-      }
-      else if ((ocean.grid[coordinate.y * ocean.x_size + coordinate.x] == dtBLOWNUP) || (ocean.grid[coordinate.y * ocean.x_size + coordinate.x] >= 1 + HIT_OFFSET && ocean.grid[coordinate.y * ocean.x_size + coordinate.x] <= 99 + HIT_OFFSET))
-      {
-        ocean.stats.duplicates++;
-        return srDUPLICATE;
-      }
-      else if (ocean.grid[coordinate.y * ocean.x_size + coordinate.x] >= 1 || ocean.grid[coordinate.y * ocean.x_size + coordinate.x] <= 99)
-      {
-        ocean.stats.hits++;
-        ocean.boats[ocean.grid[coordinate.y * ocean.x_size + coordinate.x] - 1].hits++;
-        ocean.grid[coordinate.y * ocean.x_size + coordinate.x] += HIT_OFFSET;
-        if (ocean.boats[ocean.grid[coordinate.y * ocean.x_size + coordinate.x] - 101].hits == BOAT_LENGTH)
-        {
-          ocean.stats.sunk++;
-          return srSUNK;
-        }
-      }
-      return srHIT;
-    }
-
-    /*! 
+  /*! 
         \brief
           
         \param 
@@ -140,6 +103,43 @@ namespace HLP2
         }
       }
       return bpACCEPTED;
+    }
+
+    /*! 
+        \brief
+          
+        \param 
+          
+        \return
+          
+    */
+    ShotResult TakeShot(Ocean &ocean, Point const &coordinate)
+    {
+      if (!((coordinate.x <= ocean.x_size && coordinate.x >= 0) && (coordinate.y <= ocean.y_size && coordinate.y >= 0)))
+        return srILLEGAL;
+      if (ocean.grid[coordinate.y * ocean.x_size + coordinate.x] == dtOK)
+      {
+        ocean.stats.misses++;
+        ocean.grid[coordinate.y * ocean.x_size + coordinate.x] = dtBLOWNUP;
+        return srMISS;
+      }
+      else if ((ocean.grid[coordinate.y * ocean.x_size + coordinate.x] == dtBLOWNUP) || (ocean.grid[coordinate.y * ocean.x_size + coordinate.x] >= 1 + HIT_OFFSET && ocean.grid[coordinate.y * ocean.x_size + coordinate.x] <= 99 + HIT_OFFSET))
+      {
+        ocean.stats.duplicates++;
+        return srDUPLICATE;
+      }
+      else if (ocean.grid[coordinate.y * ocean.x_size + coordinate.x] >= 1 || ocean.grid[coordinate.y * ocean.x_size + coordinate.x] <= 99)
+      {
+        ocean.stats.hits++;
+        ocean.boats[ocean.grid[coordinate.y * ocean.x_size + coordinate.x] - 1].hits++;
+        ocean.grid[coordinate.y * ocean.x_size + coordinate.x] += HIT_OFFSET;
+        if (ocean.boats[ocean.grid[coordinate.y * ocean.x_size + coordinate.x] - 101].hits == BOAT_LENGTH)
+        {
+          ocean.stats.sunk++;
+          return srSUNK;
+        }
+      }
+      return srHIT;
     }
 
     /*! 
