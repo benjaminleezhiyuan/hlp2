@@ -66,16 +66,17 @@ namespace HLP2
       return;
     }
 
-  /*! 
-        \brief
-          
-        \param 
-          
-        \return
-          
-    */
+    /*!
+          \brief
+
+          \param
+
+          \return
+
+      */
     BoatPlacement PlaceBoat(Ocean &ocean, Boat const &boat)
     {
+
       if (ocean.boats->ID >= ocean.num_boats)
         return bpREJECTED;
       if (boat.orientation == oHORIZONTAL)
@@ -102,16 +103,16 @@ namespace HLP2
             ocean.grid[(boat.position.y + i) * ocean.x_size + boat.position.x] = ocean.boats->ID;
         }
       }
+
       return bpACCEPTED;
     }
-
-    /*! 
+    /*!
         \brief
-          
-        \param 
-          
+
+        \param
+
         \return
-          
+
     */
     ShotResult TakeShot(Ocean &ocean, Point const &coordinate)
     {
@@ -142,28 +143,27 @@ namespace HLP2
       return srHIT;
     }
 
-    /*! 
+    /*!
         \brief
-          
-        \param 
-          
+
+        \param
+
         \return
-          
+
     */
     ShotStats GetShotStats(Ocean const &ocean)
     {
       return ocean.stats;
     }
 
-
-    /*! 
+    /*!
         \brief
-          
-        \param 
-          
+
+        \param
+
         \return
-          
-    */   
+
+    */
     void DumpOcean(const HLP2::WarBoats::Ocean &ocean, int field_width, bool extraline, bool showboats)
     {
       for (int y = 0; y < ocean.y_size; y++)
