@@ -113,8 +113,10 @@ namespace HLP2
 
     ShotResult TakeShot(Ocean &ocean, Point const &coordinate)
     {
-      if (!((coordinate.x <= ocean.x_size && coordinate.x >= 0) && (coordinate.y <= ocean.y_size && coordinate.y >= 0)))
-        return srILLEGAL;
+      if (coordinate.x > ocean.x_size || coordinate.x < 0 || coordinate.y > ocean.y_size || coordinate.y < 0)
+      {
+        return srILLEGAL; 
+      }
       if (ocean.grid[coordinate.y * ocean.x_size + coordinate.x] == dtOK)
       {
         ocean.stats.misses++;
