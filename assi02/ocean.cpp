@@ -111,23 +111,25 @@ namespace HLP2
 
     ShotResult TakeShot(Ocean &ocean, Point const &coordinate)
     {
+      int pos{ocean.grid[coordinate.y * ocean.x_size + coordinate.x]};
+      
       if (!((coordinate.x <= ocean.x_size && coordinate.x >= 0) && (coordinate.y <= ocean.y_size && coordinate.y >= 0)))
         return srILLEGAL;
-      if (ocean.grid[coordinate.y * ocean.x_size + coordinate.x] == dtOK)
+      if (pos == dtOK)
       {
         ocean.stats.misses++;
         ocean.grid[coordinate.y * ocean.x_size + coordinate.x] = dtBLOWNUP;
         return srMISS;
       }
-      else if ((ocean.grid[coordinate.y * ocean.x_size + coordinate.x] == dtBLOWNUP) || (ocean.grid[coordinate.y * ocean.x_size + coordinate.x] >= 1 + HIT_OFFSET && ocean.grid[coordinate.y * ocean.x_size + coordinate.x] <= 99 + HIT_OFFSET))
+      else if ((pos == dtBLOWNUP) || (pos >= 1 + HIT_OFFSET && pos <= 99 + HIT_OFFSET))
       {
         ocean.stats.duplicates++;
         return srDUPLICATE;
       }
-      else if (ocean.grid[coordinate.y * ocean.x_size + coordinate.x] >= 1 || ocean.grid[coordinate.y * ocean.x_size + coordinate.x] <= 99)
+      else if (pos >= 1 || pos <= 99)
       {
         ocean.stats.hits++;
-        ocean.boats[ocean.grid[coordinate.y * ocean.x_size + coordinate.x]].hits++;
+        ocean.boats[pos].hits++;
         ocean.grid[coordinate.y * ocean.x_size + coordinate.x] += HIT_OFFSET;
         if (ocean.boats[ocean.grid[coordinate.y * ocean.x_size + coordinate.x] - HIT_OFFSET].hits == BOAT_LENGTH)
         {

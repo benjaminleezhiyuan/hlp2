@@ -72,7 +72,7 @@ Boats Sunk:   0
    0   0   0   0   0   2   0   0
    3   3   3   3   0   0   0   0
    0   0   0   0   0   0   0   0
-   0   0   0 # 0   0  -1   0   0
+   0   0   0   0   0  -1   0   0
 
 Shot: 2, 3  HIT
       Hits:   2
@@ -102,11 +102,11 @@ Boats Sunk:   0
    0   0   0   0   0   0   0   0
    0   0   0   0   0  -1   0   0
 
-Shot: 4, 3  HIT
+Shot: 4, 3  SUNK
       Hits:   4
     Misses:   1
 Duplicates:   1
-Boats Sunk:   0
+Boats Sunk:   1
    0   0   0   0   0   0   0   0
    0   0   0   0   0   2   0   0
    0   0   0   0   0   2   0   0
