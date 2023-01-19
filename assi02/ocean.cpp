@@ -50,14 +50,6 @@ namespace HLP2
       return ocean;
     }
 
-    /*! \brief
-          Free memory that was previously allocated
-    /// \param theOcean
-          Which ocean to free
-
-        \return
-          void
-    */
     void DestroyOcean(Ocean *theOcean)
     {
       delete[] theOcean->boats;
@@ -66,54 +58,57 @@ namespace HLP2
       return;
     }
 
-    /*!
-          \brief
-
-          \param
-
-          \return
-
-      */
     BoatPlacement PlaceBoat(Ocean &ocean, Boat const &boat)
     {
 
-      if (ocean.boats->ID >= ocean.num_boats)
-        return bpREJECTED;
-      if (boat.orientation == oHORIZONTAL)
+      // Check if the boat placement is outside the bounds of the ocean
+      if (boat.position.x < 0 || boat.position.x >= ocean.x_size || boat.position.y < 0 || boat.position.y >= ocean.y_size)
       {
-        if ((boat.position.x <= ocean.x_size - BOAT_LENGTH || boat.position.x >= 0) && (boat.position.y <= ocean.y_size || boat.position.y >= 0))
-        {
-          for (int i = 0; i < BOAT_LENGTH; i++)
-            if (ocean.grid[boat.position.y * ocean.x_size + boat.position.x + i] != 0)
-              return bpREJECTED;
-          ocean.boats->ID++;
-          for (int i = 0; i < BOAT_LENGTH; i++)
-            ocean.grid[boat.position.y * ocean.x_size + boat.position.x + i] = ocean.boats->ID;
-        }
+        return BoatPlacement::bpREJECTED;
       }
-      else if (boat.orientation == oVERTICAL)
+
+      int boat_x_end = boat.position.x, boat_y_end = boat.position.y; // Initialize the end position of the boat
+
+      // Check the orientation of the boat, and calculate the end position based on the orientation and boat length
+      if (boat.orientation == Orientation::oHORIZONTAL)
       {
-        if ((boat.position.y <= ocean.y_size - BOAT_LENGTH || boat.position.y >= 0) && (boat.position.x <= ocean.x_size || boat.position.x >= 0))
+        boat_x_end += BOAT_LENGTH - 1;
+      }
+      else
+      {
+        boat_y_end += BOAT_LENGTH - 1;
+      }
+
+      // Check if the calculated end position is outside the bounds of the ocean
+      if (boat_x_end >= ocean.x_size || boat_y_end >= ocean.y_size)
+      {
+        return BoatPlacement::bpREJECTED;
+      }
+
+      // Check if the positions occupied by the boat are already occupied by other boats by checking the elements in the grid array.
+      for (int x = boat.position.x; x <= boat_x_end; x++)
+      {
+        for (int y = boat.position.y; y <= boat_y_end; y++)
         {
-          for (int i = 0; i < BOAT_LENGTH; i++)
-            if (ocean.grid[(boat.position.y + i) * ocean.x_size + boat.position.x] != 0)
-              return bpREJECTED;
-          ocean.boats->ID++;
-          for (int i = 0; i < BOAT_LENGTH; i++)
-            ocean.grid[(boat.position.y + i) * ocean.x_size + boat.position.x] = ocean.boats->ID;
+
+          if (ocean.grid[y * ocean.x_size + x] != DamageType::dtOK)
+          {
+            return BoatPlacement::bpREJECTED;
+          }
         }
       }
 
-      return bpACCEPTED;
+      // iterate through grid, record boat placement id
+      for (int x = boat.position.x; x <= boat_x_end; x++)
+      {
+        for (int y = boat.position.y; y <= boat_y_end; y++)
+        {
+          ocean.grid[y * ocean.x_size + x] = boat.ID; // record the boat placement id
+        }
+      }
+      return BoatPlacement::bpACCEPTED;
     }
-    /*!
-        \brief
 
-        \param
-
-        \return
-
-    */
     ShotResult TakeShot(Ocean &ocean, Point const &coordinate)
     {
       if (!((coordinate.x <= ocean.x_size && coordinate.x >= 0) && (coordinate.y <= ocean.y_size && coordinate.y >= 0)))
@@ -132,9 +127,9 @@ namespace HLP2
       else if (ocean.grid[coordinate.y * ocean.x_size + coordinate.x] >= 1 || ocean.grid[coordinate.y * ocean.x_size + coordinate.x] <= 99)
       {
         ocean.stats.hits++;
-        ocean.boats[ocean.grid[coordinate.y * ocean.x_size + coordinate.x] - 1].hits++;
+        ocean.boats[ocean.grid[coordinate.y * ocean.x_size + coordinate.x]].hits++;
         ocean.grid[coordinate.y * ocean.x_size + coordinate.x] += HIT_OFFSET;
-        if (ocean.boats[ocean.grid[coordinate.y * ocean.x_size + coordinate.x] - 101].hits == BOAT_LENGTH)
+        if (ocean.boats[ocean.grid[coordinate.y * ocean.x_size + coordinate.x] - HIT_OFFSET].hits == BOAT_LENGTH)
         {
           ocean.stats.sunk++;
           return srSUNK;
@@ -143,27 +138,11 @@ namespace HLP2
       return srHIT;
     }
 
-    /*!
-        \brief
-
-        \param
-
-        \return
-
-    */
     ShotStats GetShotStats(Ocean const &ocean)
     {
       return ocean.stats;
     }
 
-    /*!
-        \brief
-
-        \param
-
-        \return
-
-    */
     void DumpOcean(const HLP2::WarBoats::Ocean &ocean, int field_width, bool extraline, bool showboats)
     {
       for (int y = 0; y < ocean.y_size; y++)
