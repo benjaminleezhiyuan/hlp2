@@ -36,13 +36,8 @@ namespace HLP2
     Ocean *CreateOcean(int num_boats, int x_size, int y_size)
     {
       Ocean *ocean = new Ocean;
-      ocean->grid = new int[x_size * y_size]();
-      ocean->boats = new Boat[num_boats];
-      for (int i = 0; i < num_boats; i++)
-      {
-        ocean->boats[i].hits = 0;
-        ocean->boats[i].ID = 0;
-      }
+      ocean->grid = new int[x_size * y_size]{};
+      ocean->boats = new Boat[num_boats]{};
       ocean->num_boats = num_boats;
       ocean->x_size = x_size;
       ocean->y_size = y_size;
@@ -118,23 +113,23 @@ namespace HLP2
       {
         return srILLEGAL;
       }
-      if (ocean.grid[coordinate.y * ocean.x_size + coordinate.x] == dtOK)
+      if (ocean.grid[(coordinate.y * ocean.x_size) + coordinate.x] == dtOK)
       {
         ocean.stats.misses++;
-        ocean.grid[coordinate.y * ocean.x_size + coordinate.x] = dtBLOWNUP;
+        ocean.grid[(coordinate.y * ocean.x_size) + coordinate.x] = dtBLOWNUP;
         return srMISS;
       }
-      else if ((ocean.grid[coordinate.y * ocean.x_size + coordinate.x] == dtBLOWNUP) || (ocean.grid[coordinate.y * ocean.x_size + coordinate.x] >= 1 + HIT_OFFSET && ocean.grid[coordinate.y * ocean.x_size + coordinate.x] <= 99 + HIT_OFFSET))
+      else if ((ocean.grid[(coordinate.y * ocean.x_size) + coordinate.x] == dtBLOWNUP) || (ocean.grid[(coordinate.y * ocean.x_size) + coordinate.x] >= 1 + HIT_OFFSET && ocean.grid[(coordinate.y * ocean.x_size) + coordinate.x] <= 99 + HIT_OFFSET))
       {
         ocean.stats.duplicates++;
         return srDUPLICATE;
       }
-      else if (ocean.grid[coordinate.y * ocean.x_size + coordinate.x] >= 1 || ocean.grid[coordinate.y * ocean.x_size + coordinate.x] <= 99)
+      else if (ocean.grid[(coordinate.y * ocean.x_size) + coordinate.x] >= 1 || ocean.grid[(coordinate.y * ocean.x_size) + coordinate.x] <= 99)
       {
         ocean.stats.hits++;
-        ocean.boats[ocean.grid[coordinate.y * ocean.x_size + coordinate.x]].hits++;
-        ocean.grid[coordinate.y * ocean.x_size + coordinate.x] += HIT_OFFSET;
-        if (ocean.boats[ocean.grid[coordinate.y * ocean.x_size + coordinate.x] - HIT_OFFSET].hits == BOAT_LENGTH)
+        ocean.boats[ocean.grid[(coordinate.y * ocean.x_size) + coordinate.x]].hits++;
+        ocean.grid[(coordinate.y * ocean.x_size) + coordinate.x] += HIT_OFFSET;
+        if (ocean.boats[ocean.grid[(coordinate.y * ocean.x_size) + coordinate.x] - HIT_OFFSET].hits == BOAT_LENGTH)
         {
           ocean.stats.sunk++;
           return srSUNK;
