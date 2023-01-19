@@ -36,7 +36,7 @@ namespace HLP2
     Ocean *CreateOcean(int num_boats, int x_size, int y_size)
     {
       Ocean *ocean = new Ocean;
-      ocean->grid = new int[x_size * y_size]();
+      ocean->grid = new int[x_size * y_size];
       ocean->boats = new Boat[num_boats];
       ocean->boats->hits = 0;
       ocean->boats->ID = 0;
