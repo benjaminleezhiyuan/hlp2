@@ -37,10 +37,11 @@ namespace HLP2
     {
       Ocean *ocean = new Ocean;
       ocean->grid = new int[x_size * y_size]();
-      ocean->boats = new Boat[num_boats]; 
-      for(int i=0;i<num_boats;i++){  
-      ocean->boats[i].hits = 0;
-      ocean->boats[i].ID = 0;
+      ocean->boats = new Boat[num_boats];
+      for (int i = 0; i < num_boats; i++)
+      {
+        ocean->boats[i].hits = 0;
+        ocean->boats[i].ID = 0;
       }
       ocean->num_boats = num_boats;
       ocean->x_size = x_size;
@@ -115,7 +116,7 @@ namespace HLP2
     {
       if (coordinate.x > ocean.x_size || coordinate.x < 0 || coordinate.y > ocean.y_size || coordinate.y < 0)
       {
-        return srILLEGAL; 
+        return srILLEGAL;
       }
       if (ocean.grid[coordinate.y * ocean.x_size + coordinate.x] == dtOK)
       {
@@ -133,7 +134,7 @@ namespace HLP2
         ocean.stats.hits++;
         ocean.boats[ocean.grid[coordinate.y * ocean.x_size + coordinate.x]].hits++;
         ocean.grid[coordinate.y * ocean.x_size + coordinate.x] += HIT_OFFSET;
-        if (ocean.boats[ocean.grid[coordinate.y * ocean.x_size + coordinate.x]-HIT_OFFSET].hits == BOAT_LENGTH)
+        if (ocean.boats[ocean.grid[coordinate.y * ocean.x_size + coordinate.x] - HIT_OFFSET].hits == BOAT_LENGTH)
         {
           ocean.stats.sunk++;
           return srSUNK;
