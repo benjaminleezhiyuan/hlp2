@@ -36,10 +36,12 @@ namespace HLP2
     Ocean *CreateOcean(int num_boats, int x_size, int y_size)
     {
       Ocean *ocean = new Ocean;
-      ocean->grid = new int[x_size * y_size];
-      ocean->boats = new Boat[num_boats];
-      ocean->boats->hits = 0;
-      ocean->boats->ID = 0;
+      ocean->grid = new int[x_size * y_size]();
+      ocean->boats = new Boat[num_boats]; 
+      for(int i=0;i<num_boats;i++){  
+      ocean->boats[i].hits = 0;
+      ocean->boats[i].ID = 0;
+      }
       ocean->num_boats = num_boats;
       ocean->x_size = x_size;
       ocean->y_size = y_size;
@@ -64,13 +66,13 @@ namespace HLP2
       // Check if the boat placement is outside the bounds of the ocean
       if (boat.position.x < 0 || boat.position.x >= ocean.x_size || boat.position.y < 0 || boat.position.y >= ocean.y_size)
       {
-        return BoatPlacement::bpREJECTED;
+        return bpREJECTED;
       }
 
       int boat_x_end = boat.position.x, boat_y_end = boat.position.y; // Initialize the end position of the boat
 
       // Check the orientation of the boat, and calculate the end position based on the orientation and boat length
-      if (boat.orientation == Orientation::oHORIZONTAL)
+      if (boat.orientation == oHORIZONTAL)
       {
         boat_x_end += BOAT_LENGTH - 1;
       }
@@ -82,7 +84,7 @@ namespace HLP2
       // Check if the calculated end position is outside the bounds of the ocean
       if (boat_x_end >= ocean.x_size || boat_y_end >= ocean.y_size)
       {
-        return BoatPlacement::bpREJECTED;
+        return bpREJECTED;
       }
 
       // Check if the positions occupied by the boat are already occupied by other boats by checking the elements in the grid array.
@@ -91,9 +93,9 @@ namespace HLP2
         for (int y = boat.position.y; y <= boat_y_end; y++)
         {
 
-          if (ocean.grid[y * ocean.x_size + x] != DamageType::dtOK)
+          if (ocean.grid[y * ocean.x_size + x] != dtOK)
           {
-            return BoatPlacement::bpREJECTED;
+            return bpREJECTED;
           }
         }
       }
@@ -106,7 +108,7 @@ namespace HLP2
           ocean.grid[y * ocean.x_size + x] = boat.ID; // record the boat placement id
         }
       }
-      return BoatPlacement::bpACCEPTED;
+      return bpACCEPTED;
     }
 
     ShotResult TakeShot(Ocean &ocean, Point const &coordinate)
@@ -129,7 +131,7 @@ namespace HLP2
         ocean.stats.hits++;
         ocean.boats[ocean.grid[coordinate.y * ocean.x_size + coordinate.x]].hits++;
         ocean.grid[coordinate.y * ocean.x_size + coordinate.x] += HIT_OFFSET;
-        if (ocean.boats[ocean.grid[coordinate.y * ocean.x_size + coordinate.x] - HIT_OFFSET].hits == BOAT_LENGTH)
+        if (ocean.boats[ocean.grid[coordinate.y * ocean.x_size + coordinate.x]-HIT_OFFSET].hits == BOAT_LENGTH)
         {
           ocean.stats.sunk++;
           return srSUNK;
