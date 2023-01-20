@@ -15,14 +15,18 @@ namespace hlp2
         std::string ay = "-ay";
         std::string way = "-way";
         std::string temp;
+        std::string skipfirst;
         std::string firstcharacter;
+        int last=word.back();
         firstcharacter=word.at(0);
+        skipfirst=word.substr(1,last);
 
-        if((word.find_first_of("aeiouAEIOUyY")==std::string::npos) && (firstcharacter.find_first_of("yY"))==std::string::npos)
+        if((skipfirst.find_first_of("aeiouAEIOUyY")==std::string::npos)&&(firstcharacter.find_first_of("aeiouAEIOU")==std::string::npos))
         {
         word.append(way);
         return word;
         }
+
         int i=0;
         if(firstcharacter.find_first_of("aeiouAEIOU")==std::string::npos)
         {   
@@ -40,9 +44,9 @@ namespace hlp2
             i = word.find_first_of("aeiouAEIOUyY");
             temp = word.substr(0,i);
             word.erase(0,i);
-            word.append(temp);
-            word.append(ay);
-            return word;               
+            word.append(temp); 
+            word.append(ay);    
+            return word;     
             }
         }
 
