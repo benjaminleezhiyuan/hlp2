@@ -46,6 +46,7 @@ namespace hlp2
             }
         }
 
+
         if(firstcharacter.find_first_of("aeiouAEIOU")!=std::string::npos)
         {
             word.append(yay);
