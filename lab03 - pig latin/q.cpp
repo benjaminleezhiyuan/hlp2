@@ -1,12 +1,33 @@
-#include <iostream> // std::cout
-#include <iomanip>  // std::setw, std::endl 
-#include <string>   // std::string
-#include <fstream>  // std::ifstream
-#include <vector>   // std::vector<std::string>
-#include <iterator> // std::istream_iterator<std::string>
-#include "q.hpp"    // to_piglatin
+#include <string> // std::string
+#include "q.hpp"  // to_piglatin
 // See the specs for more information on how to author q.cpp ...
 // don't forget - all names introduced by you must be in namespace hlp2 ...
+namespace
+{
+    std::string vowels{"aeiouAEIOU"};    // all vowels
+    std::string vowelsy{"aeiouAEIOUyY"}; // all vowels and y
+
+    bool vowelcheck(char c)
+    {
+        c = std::tolower(c);
+        if (vowels.find(c) != std::string::npos)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    bool vowelchecky(char c)
+    {
+        c = std::tolower(c);
+        if (vowelsy.find(c) != std::string::npos)
+        {
+            return true;
+        }
+        return false;
+    }
+}
+
 namespace hlp2
 {
     std::string to_piglatin(std::string word)
@@ -14,50 +35,33 @@ namespace hlp2
         std::string yay = "-yay";
         std::string ay = "-ay";
         std::string way = "-way";
-        std::string temp;
-        std::string skipfirst;
-        std::string firstcharacter;
-        int last=word.back();
-        firstcharacter=word.at(0);
-        skipfirst=word.substr(1,last);
 
-        if((skipfirst.find_first_of("aeiouAEIOUyY")==std::string::npos)&&(firstcharacter.find_first_of("aeiouAEIOU")==std::string::npos))
+        if (vowelcheck(word[0]))
         {
-        word.append(way);
-        return word;
+            return word.append(yay);
         }
 
-        int i=0;
-        if(firstcharacter.find_first_of("aeiouAEIOU")==std::string::npos)
-        {   
-            if(firstcharacter.find_first_of("yY")!=std::string::npos)
-            {
-            i = word.find_first_of("aeiouAEIOU");
-            temp = word.substr(0,i);
-            word.erase(0,i);
-            word.append(temp);
-            word.append(ay);
-            return word;
-            }
-            else
-            {
-            i = word.find_first_of("aeiouAEIOUyY");
-            temp = word.substr(0,i);
-            word.erase(0,i);
-            word.append(temp); 
-            word.append(ay);    
-            return word;     
-            }
-        }
-
-
-        if(firstcharacter.find_first_of("aeiouAEIOU")!=std::string::npos)
+        if (word.find_first_of(vowelsy) == std::string::npos)
         {
-            word.append(yay);
-            return word;
+            return word.append(way);
         }
 
+        bool cap{false};
+        if (std::isupper(word[0]))
+        {
+            cap = true;
+            word[0] = std::tolower(word[0]);
+        }
+        do
+        {
+            word += word[0];
+            word.erase(0, 1);
+        } while (!vowelchecky(word[0]));
 
-        return word;
+        if (cap)
+        {
+            word[0] = std::toupper(word[0]);
+        }
+        return word.append(ay);
     }
 }

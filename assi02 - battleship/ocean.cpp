@@ -1,3 +1,14 @@
+/******************************************************************************
+\file    q.cpp
+\author  Benjamin Lee Zhi Yuan
+\par     DP email: benjaminzhiyuan.lee
+\par     Course: CSD1171
+\par     Section: A
+\par     Assignment 01
+\date    10-01-23
+
+\brief
+********************************************************************************/
 #include "ocean.h"
 #include <iostream> // std::cout
 #include <iomanip>  // std::setw
@@ -47,7 +58,11 @@ namespace HLP2
       ocean->stats.sunk = 0;
       return ocean;
     }
-
+/******************************************************************
+ * @brief 
+ * 
+ * @param theOcean 
+ *********************************************************************/
     void DestroyOcean(Ocean *theOcean)
     {
       delete[] theOcean->boats;
