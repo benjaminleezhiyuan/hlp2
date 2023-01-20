@@ -18,7 +18,7 @@ namespace hlp2
         std::string firstcharacter;
         firstcharacter=word.at(0);
 
-        if(word.find_first_of("aeiouAEIOU")==std::string::npos)
+        if((word.find_first_of("aeiouAEIOUyY")==std::string::npos) && (firstcharacter.find_first_of("yY"))==std::string::npos)
         {
         word.append(way);
         return word;
