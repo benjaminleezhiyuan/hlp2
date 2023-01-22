@@ -17,7 +17,6 @@ q.hpp. It also contains vowelcheck and vowelchecky that are private to this file
     -vowelchecky
       Checks if current character is any of the following vowels aeiou and y.
 
-
     -to_piglatin
       Takes in a string and converts it to pig latin.
 
