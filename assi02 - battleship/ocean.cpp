@@ -73,7 +73,7 @@ namespace HLP2
     {
       Ocean *ocean = new Ocean;
       ocean->grid = new int[y_size * x_size]{DamageType::dtOK};
-      ocean->boats = new Boat[num_boats]{0};
+      ocean->boats = new Boat[num_boats]{};
       ocean->num_boats = num_boats;
       ocean->x_size = x_size;
       ocean->y_size = y_size;
