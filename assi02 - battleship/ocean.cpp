@@ -1,11 +1,11 @@
 /******************************************************************************
-\file    q.cpp
+\file    ocean.cpp
 \author  Benjamin Lee Zhi Yuan
 \par     DP email: benjaminzhiyuan.lee
 \par     Course: CSD1171
 \par     Section: A
-\par     Assignment 01
-\date    10-01-23
+\par     Assignment 02
+\date    19-01-23
 
 \brief
 ********************************************************************************/
@@ -47,7 +47,7 @@ namespace HLP2
     Ocean *CreateOcean(int num_boats, int x_size, int y_size)
     {
       Ocean *ocean = new Ocean;
-      ocean->grid = new int[x_size * y_size]{};
+      ocean->grid = new int[y_size * x_size]{};
       ocean->boats = new Boat[num_boats]{};
       ocean->num_boats = num_boats;
       ocean->x_size = x_size;
@@ -75,7 +75,7 @@ namespace HLP2
     {
 
       // Check if the boat placement is outside the bounds of the ocean
-      if (boat.position.x < 0 || boat.position.x >= ocean.x_size || boat.position.y < 0 || boat.position.y >= ocean.y_size)
+      if (boat.position.x < 0 || boat.position.x > ocean.x_size || boat.position.y < 0 || boat.position.y > ocean.y_size)
       {
         return bpREJECTED;
       }
