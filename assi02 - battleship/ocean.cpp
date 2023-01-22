@@ -8,6 +8,27 @@
 \date    19-01-23
 
 \brief
+Creates the game of battleship and simulates shots taken using functions
+  -CreateOcean
+    Dynamically allocates the grid and boats for the game of battleship.
+
+  -DestroyOcean
+    Clears the memory allocated in function CreateOcean.
+
+  -PlaceBoat
+    Places a boat into the grid. It checks whether the boat is within the bounds
+    of the grid before doing so.
+
+  -TakeShot
+    Takes a shot on the grid. It checks whether the shot is in bounds before doing
+    so. It returns different values based on whether the shot missed, hits a previously
+    shot location, hits a ship. If it hits a ship, it checks whether the ship is sunk.
+
+  -GetShotStats
+    Returns the statistics from the free store object referenced by ocean.
+  
+  -DumpOcean
+    Displays ocean
 ********************************************************************************/
 #include "ocean.h"
 #include <iostream> // std::cout
@@ -26,29 +47,33 @@ namespace HLP2
      */
 
     /**************************************************************************/
-    /*!
-      \brief
-        Prints the grid (ocean) to the screen.
-
-      \param ocean
-        The Ocean to print
-
-      \param field_width
-        How much space each position takes when printed.
-
-      \param extraline
-        If true, an extra line is printed after each row. If false, no extra
-        line is printed.
-
-      \param showboats
-        If true, the boats are shown in the output. (Debugging feature)
-    */
-    /**************************************************************************/
+ 
+/******************************************************************
+ * @brief 
+ * Create a Ocean object
+ * Dynamically allocates array for Ocean with grid array of ints with 
+ * hor_size * ver_size number of elements. Sets each position within the 
+ * grid with value constant DamageType::dtOK
+ * Dynamically allocates array for Boats with size num_boats with value of 0
+ * Sets value of data member of ocean.stats to 0.
+ * 
+ * @param num_boats 
+ * number of boats 
+ * 
+ * @param x_size
+ * width of ocean
+ *  
+ * @param y_size 
+ * height of ocean
+ * 
+ * @return 
+ * Pointer to dynamically allocated Ocean object.
+ *********************************************************************/
     Ocean *CreateOcean(int num_boats, int x_size, int y_size)
     {
       Ocean *ocean = new Ocean;
-      ocean->grid = new int[y_size * x_size]{};
-      ocean->boats = new Boat[num_boats]{};
+      ocean->grid = new int[y_size * x_size]{DamageType::dtOK};
+      ocean->boats = new Boat[num_boats]{0};
       ocean->num_boats = num_boats;
       ocean->x_size = x_size;
       ocean->y_size = y_size;
@@ -60,8 +85,10 @@ namespace HLP2
     }
 /******************************************************************
  * @brief 
+ * Deletes dynamically allocated memory for arrays created in CreateOcean.
  * 
  * @param theOcean 
+ * Pointer to ocean to delete allocated memory.
  *********************************************************************/
     void DestroyOcean(Ocean *theOcean)
     {
@@ -70,7 +97,20 @@ namespace HLP2
       delete theOcean;
       return;
     }
-
+/******************************************************************
+ * @brief 
+ * Places boat onto the grid created by CreateOcean
+ * 
+ * @param ocean 
+ * pointer to the ocean
+ * 
+ * @param boat 
+ * pointer to boat struct
+ * 
+ * @return 
+ * Return value indicates whether boat can be placed on the chosen
+ * location
+ *********************************************************************/
     BoatPlacement PlaceBoat(Ocean &ocean, Boat const &boat)
     {
 
@@ -121,30 +161,50 @@ namespace HLP2
       }
       return bpACCEPTED;
     }
-
+/******************************************************************
+ * @brief 
+ * Chooses a point on the grid to shoot based on coordinate input.
+ * 
+ * @param ocean 
+ * pointer to ocean
+ * 
+ * @param coordinate 
+ * Pointer to Point struct that contains x and y position of the shot.
+ * 
+ * @return 
+ * Returns shot results depending on location chosen.
+ * Possible values are:
+ * -srILLEGAL   (Coordinate of shot is outside the grid)
+ * -srMISS      (Coordinate of shot landed in empty position)
+ * -srDUPLICATE (Coordinate of shot landed on previously shot position)
+ * -srSUNK      (Coordinate of shot sunk boat)
+ * -srHIT       (Coordinate of shot hit a boat)
+ *********************************************************************/
     ShotResult TakeShot(Ocean &ocean, Point const &coordinate)
     {
-      if (coordinate.x > ocean.x_size || coordinate.x < 0 || coordinate.y > ocean.y_size || coordinate.y < 0)
+      if (coordinate.x >= ocean.x_size || coordinate.x < 0 || coordinate.y >= ocean.y_size || coordinate.y < 0) //check if shot coordinate lands outside the grid
       {
         return srILLEGAL;
       }
-      if (ocean.grid[(coordinate.y * ocean.x_size) + coordinate.x] == dtOK)
+      if (ocean.grid[coordinate.y * ocean.x_size + coordinate.x] == dtOK)//check if shot coordinate is empty
       {
         ocean.stats.misses++;
-        ocean.grid[(coordinate.y * ocean.x_size) + coordinate.x] = dtBLOWNUP;
+        ocean.grid[coordinate.y * ocean.x_size + coordinate.x] = dtBLOWNUP;//changes empty coordinate to reflect that it has been blown up.
         return srMISS;
       }
-      else if ((ocean.grid[(coordinate.y * ocean.x_size) + coordinate.x] == dtBLOWNUP) || (ocean.grid[(coordinate.y * ocean.x_size) + coordinate.x] >= 1 + HIT_OFFSET && ocean.grid[(coordinate.y * ocean.x_size) + coordinate.x] <= 99 + HIT_OFFSET))
+      //checks if shot coordinate lands on previously blow up coordinate
+      else if ((ocean.grid[coordinate.y * ocean.x_size + coordinate.x] == dtBLOWNUP) || (ocean.grid[coordinate.y * ocean.x_size + coordinate.x] >= 1 + HIT_OFFSET && ocean.grid[coordinate.y * ocean.x_size + coordinate.x] <= 99 + HIT_OFFSET))
       {
         ocean.stats.duplicates++;
         return srDUPLICATE;
       }
-      else if (ocean.grid[(coordinate.y * ocean.x_size) + coordinate.x] >= 1 || ocean.grid[(coordinate.y * ocean.x_size) + coordinate.x] <= 99)
+      //checks if shot coordinate lands on a boat
+      else if (ocean.grid[coordinate.y * ocean.x_size + coordinate.x] >= 1 || ocean.grid[coordinate.y * ocean.x_size + coordinate.x] <= 99)
       {
         ocean.stats.hits++;
-        ocean.boats[ocean.grid[(coordinate.y * ocean.x_size) + coordinate.x]].hits++;
-        ocean.grid[(coordinate.y * ocean.x_size) + coordinate.x] += HIT_OFFSET;
-        if (ocean.boats[ocean.grid[(coordinate.y * ocean.x_size) + coordinate.x] - HIT_OFFSET].hits == BOAT_LENGTH)
+        ocean.boats[ocean.grid[coordinate.y * ocean.x_size + coordinate.x]-1].hits++;
+        ocean.grid[coordinate.y * ocean.x_size + coordinate.x] += HIT_OFFSET;//change coordinate to reflect that boat has been hit
+        if (ocean.boats[ocean.grid[coordinate.y * ocean.x_size + coordinate.x] -1 - HIT_OFFSET].hits == BOAT_LENGTH)//checks if 4 coordinates of the same boat id has been struck.
         {
           ocean.stats.sunk++;
           return srSUNK;
@@ -152,12 +212,36 @@ namespace HLP2
       }
       return srHIT;
     }
-
+   
+/******************************************************************
+ * @brief 
+ * Get the Shot Stats object
+ * 
+ * @param ocean 
+ * pointer to ocean
+ * 
+ * @return 
+ * ocean.stats
+ *********************************************************************/
     ShotStats GetShotStats(Ocean const &ocean)
     {
       return ocean.stats;
     }
-
+/******************************************************************
+ * @brief Funtion to display the ocean.
+ * 
+ * @param ocean 
+ * Ocean to print
+ * 
+ * @param field_width 
+ * Space each position requires
+ * 
+ * @param extraline
+ * extraline to be printed or not
+ *  
+ * @param showboats 
+ * Shows boats in output if true.
+ *********************************************************************/
     void DumpOcean(const HLP2::WarBoats::Ocean &ocean, int field_width, bool extraline, bool showboats)
     {
       for (int y = 0; y < ocean.y_size; y++)
