@@ -1,3 +1,28 @@
+/*!*****************************************************************************
+\file    q.cpp
+\author  Benjamin Lee Zhi Yuan
+\par     DP email: benjaminzhiyuan.lee
+\par     Course: CSD1171
+\par     Section: A
+\par     Lab 03
+\date    20-01-23
+
+\brief
+This source file contains the definitions for function to_piglatin declared in
+q.hpp. It also contains vowelcheck and vowelchecky that are private to this file.
+
+    -vowelcheck
+      Checks if current character is any of the following vowels aeiou.
+
+    -vowelchecky
+      Checks if current character is any of the following vowels aeiou and y.
+
+
+    -to_piglatin
+      Takes in a string and converts it to pig latin.
+
+*******************************************************************************/
+
 #include <string> // std::string
 #include "q.hpp"  // to_piglatin
 // See the specs for more information on how to author q.cpp ...
@@ -6,7 +31,13 @@ namespace
 {
     std::string vowels{"aeiouAEIOU"};    // all vowels
     std::string vowelsy{"aeiouAEIOUyY"}; // all vowels and y
-
+/******************************************************************
+ * @brief checks if character is a vowel aeiou
+ * 
+ * @param c 
+ * @return true 
+ * @return false 
+ *********************************************************************/
     bool vowelcheck(char c)
     {
         c = std::tolower(c);
@@ -16,7 +47,13 @@ namespace
         }
         return false;
     }
-
+/******************************************************************
+ * @brief checks if character is a vowel aeiou and y.
+ * 
+ * @param c 
+ * @return true 
+ * @return false 
+ *********************************************************************/
     bool vowelchecky(char c)
     {
         c = std::tolower(c);
@@ -30,6 +67,12 @@ namespace
 
 namespace hlp2
 {
+    /******************************************************************
+     * @brief converts a string to pig latin
+     * 
+     * @param word 
+     * @return word converted to pig latin
+     *********************************************************************/
     std::string to_piglatin(std::string word)
     {
         std::string yay = "-yay";
