@@ -128,7 +128,7 @@ void test_insert() {
   std::cout << "List (" << std::setw(2) << hlp2::size(list) << " nodes): " << list << "\n";
   
   hlp2::destruct(list); // accessing list interface thro' list is now unsafe ... 
-}
+} 
 
 void test_remove() {
   using namespace hlp2;
