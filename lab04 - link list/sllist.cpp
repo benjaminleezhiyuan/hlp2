@@ -7,13 +7,9 @@
 // See the spec for structure and interface definitions!!!
 namespace
 {
-    hlp2::node* create_node(int value, hlp2::node *next = nullptr);
-    // define this private function in anonymous namespace!!!
-    hlp2::node *create_node(int value, hlp2::node *next)
-    {
-        return new hlp2::node{value, next};
-    }
-
+    // declaration in anonymous namespace of private function that creates
+    // a node on heap and initializes it with data and pointer to successor
+    hlp2::node *create_node(int value, hlp2::node *next = nullptr);
 }
 
 namespace hlp2
@@ -59,26 +55,47 @@ namespace hlp2
     void destruct(sllist *ptr_sll)
     {
         node *p, *q;
-        p=ptr_sll->head;
-        while(p!=NULL)
+        p = ptr_sll->head;
+        while (p != NULL)
         {
-            q=p->next;
+            q = p->next;
             delete p;
-            p=q;
+            p = q;
         }
-        delete ptr_sll;  
+        delete ptr_sll;
     }
 
     bool empty(sllist const *ptr_sll)
     {
-        if(size(ptr_sll)==0)
+        if (size(ptr_sll) == 0)
         {
             return true;
         }
+        return false;
     }
-    
+
     void push_back(sllist *ptr_sll, int value)
     {
+        // use create_node to create a new node with value val
+        hlp2::node *new_node = create_node(value);
+
+        // if the list is empty, make new_node the first node
+        if (ptr_sll->head == nullptr)
+        {
+            ptr_sll->head = new_node;
+        }
+        else
+        {
+            // traverse the list to find the last node
+            hlp2::node *current = ptr_sll->head;
+            while (current->next != nullptr)
+            {
+                current = current->next;
+            }
+
+            // add new_node to the end of the list
+            current->next = new_node;
+        }
     }
     void remove_first(sllist *ptr_sll, int value)
     {
@@ -94,5 +111,14 @@ namespace hlp2
     }
     node *find(sllist const *ptr_sll, int value)
     {
+    }
+}
+
+namespace
+{
+    // define this private function in anonymous namespace!!!
+    hlp2::node *create_node(int value, hlp2::node *next)
+    {
+        return new hlp2::node{value, next};
     }
 }
