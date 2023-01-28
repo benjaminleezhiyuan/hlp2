@@ -8,7 +8,8 @@
 \date    27-01-23
 
 \brief
-
+This program creates a singly-linked list that encapsulates an int value into a node 
+and allows you to insert, delete, find and empty the list.
 **********************************************************************************/
 #include "sllist.hpp"
 // Other than sllist.hpp, you really don't have to include any other files except when testing your code.
@@ -38,9 +39,11 @@ namespace hlp2
 
     /******************************************************************
      * @brief
-     *
+     *accesses node data
      * @param p
+     * pointer to node
      * @return int
+     * return value of node
      *********************************************************************/
     int data(node const *p)
     {
@@ -49,9 +52,11 @@ namespace hlp2
 
     /******************************************************************
      * @brief
-     *
+     * changes value of node
      * @param p
+     * pointer to node
      * @param newval
+     * new value of node
      *********************************************************************/
     void data(node *p, int newval)
     {
@@ -60,9 +65,11 @@ namespace hlp2
 
     /******************************************************************
      * @brief
-     *
+     * Sets pointer to the next node
      * @param p
+     * pointer to node
      * @return node*
+     * pointer to next node
      *********************************************************************/
     node *next(node *p)
     {
@@ -71,9 +78,11 @@ namespace hlp2
 
     /******************************************************************
      * @brief
-     *
+     *Sets pointer to const pointer to the next node
      * @param p
+     * pointer to node
      * @return node const*
+     * pointer const to next node
      *********************************************************************/
     node const *next(node const *p)
     {
@@ -83,7 +92,7 @@ namespace hlp2
     // return initialized sllist object allocated on free store
     /******************************************************************
      * @brief
-     *
+     * create object of type sllist 
      * @return sllist*
      *********************************************************************/
     sllist *construct()
@@ -94,9 +103,11 @@ namespace hlp2
     // add element to front of linked list
     /******************************************************************
      * @brief
-     *
+     * The purpose of push_front() is to insert a new node object to the front of the linked list.
      * @param ptr_sll
+     * pointer to sllist
      * @param value
+     * value to be added to front of sllist
      *********************************************************************/
     void push_front(sllist *ptr_sll, int value)
     {
@@ -106,9 +117,12 @@ namespace hlp2
     // return number of elements in linked list container
     /******************************************************************
      * @brief
-     *
+     * returns the number of elements in the list and be used by clients to
+     * determine the number of elements contained in the list
      * @param ptr_sll
+     * pointer to sllist
      * @return size_t
+     * number of elements in the list
      *********************************************************************/
     size_t size(sllist const *ptr_sll)
     {
@@ -122,8 +136,9 @@ namespace hlp2
 
     /******************************************************************
      * @brief
-     *
+     * deallocates memory from list object sllist
      * @param ptr_sll
+     * pointer to sllist
      *********************************************************************/
     void destruct(sllist *ptr_sll)
     {
@@ -140,10 +155,14 @@ namespace hlp2
 
     /******************************************************************
      * @brief
-     *
+     * This function declared as bool empty(sllist const *ptr_sll); returns true if the list pointed
+     * to by ptr_sll has no elements. 
      * @param ptr_sll
+     * pointer to ptr_sll
      * @return true
+     * returns true if empty
      * @return false
+     * returns false if not empty
      *********************************************************************/
     bool empty(sllist const *ptr_sll)
     {
@@ -156,9 +175,12 @@ namespace hlp2
 
     /******************************************************************
      * @brief
-     *
+     * Function push_back(sllist *ptr_sll, int val) adds a new element with value val to the
+     * end of the list container pointed to by ptr_sll , after its current last node.
      * @param ptr_sll
+     * pointer to ptr_sll
      * @param value
+     * adds value to the end of ptr_sll
      *********************************************************************/
     void push_back(sllist *ptr_sll, int value)
     {
@@ -184,9 +206,12 @@ namespace hlp2
 
     /******************************************************************
      * @brief
-     *
+     * Function remove_first(sllist *ptr_sll, int val) deletes the first element encountered with
+     * the same value as second parameter val .
      * @param ptr_sll
+     * pointer to ptr_sll
      * @param value
+     * element value to be deleted from list.
      *********************************************************************/
     void remove_first(sllist *ptr_sll, int value)
     {
@@ -228,10 +253,15 @@ namespace hlp2
 
     /******************************************************************
      * @brief
-     *
+     * Function insert declared as void insert(sllist *ptr_sll, int value, size_t position);
+     * inserts a new element encapsulating data equal to parameter value into the list pointed to by
+     * parameter ptr_sll at an index specified by parameter position 
      * @param ptr_sll
+     * pointer to ptr_sll
      * @param value
+     * value to be inserted
      * @param index
+     * position to insert value
      *********************************************************************/
     void insert(sllist *ptr_sll, int value, size_t index)
     {
@@ -264,9 +294,12 @@ namespace hlp2
 
     /******************************************************************
      * @brief
-     *
+     * Return pointer to the first element of the list
      * @param ptr_sll
+     * pointer to ptr_sll
      * @return node*
+     * return pointer to the first element of the list or nullptr if the
+     * list has zero elements.
      *********************************************************************/
     node *front(sllist *ptr_sll)
     {
@@ -275,9 +308,12 @@ namespace hlp2
 
     /******************************************************************
      * @brief
-     *
+     * Return pointer to the first element of the list
      * @param ptr_sll
-     * @return node const*
+     * pointer to ptr_sll
+     * @return node*
+     * return pointer to the first element of the list or nullptr if the
+     * list has zero elements.
      *********************************************************************/
     node const *front(sllist const *ptr_sll)
     {
@@ -286,10 +322,15 @@ namespace hlp2
 
     /******************************************************************
      * @brief
-     *
+     *Function find declared as node* find(sllist *ptr_sll, int value); returns a pointer to the
+     first element in the list pointed to by parameter ptr_sll whose data is equal to the second
+     parameter value .
      * @param ptr_sll
+     pointer to ptr_sll
      * @param value
+     value of element to find in list
      * @return node*
+     pointer to first element that equals to value.
      *********************************************************************/
     node *find(sllist const *ptr_sll, int value)
     {

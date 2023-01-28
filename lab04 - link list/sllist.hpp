@@ -8,7 +8,8 @@
 \date    27-01-23
 
 \brief
-
+This program creates a singly-linked list that encapsulates an int value into a node 
+and allows you to insert, delete, find and empty the list.
 **********************************************************************************/
 
 #ifndef hpp
