@@ -1,3 +1,17 @@
+/*!*****************************************************************************
+\file    sllist.hpp
+\author  Benjamin Lee Zhi Yuan
+\par     DP email: benjaminzhiyuan.lee
+\par     Course: CSD1171
+\par     Section: A
+\par     Lab 04
+\date    27-01-23
+
+\brief
+This program creates a singly-linked list that encapsulates an int value into a node 
+and allows you to insert, delete, find and empty the list.
+**********************************************************************************/
+
 #ifndef hpp
 #define hpp
 // Provide include guards
@@ -35,7 +49,6 @@ namespace hlp2
     node *front(sllist *ptr_sll);
     node const *front(sllist const *ptr_sll);
     node *find(sllist const *ptr_sll, int value);
-    // declaration of functions
     sllist *construct();
     void push_front(sllist *ptr_sll, int value);
     size_t size(sllist const *ptr_sll);

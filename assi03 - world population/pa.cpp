@@ -133,7 +133,7 @@ namespace HLP2
         { // goes through vector and compares pairs of elements.
             for (size_t j = 0; j < rv.size() - 1; j++)
             { // if both arguments are in the wrong order swap.
-                if (cmp(rv[j], rv[j + 1]))
+                if (cmp(rv[j+1], rv[j]))
                 {
                     // swaps the order of the arguments.
                     CountryInfo temp = rv[j];
@@ -180,7 +180,7 @@ namespace HLP2
      *********************************************************************/
     bool cmp_name_less(CountryInfo const &left, CountryInfo const &right)
     {
-        if (std::string(left.name) > std::string(right.name))
+        if (std::string(left.name) < std::string(right.name))
         {
             return true;
         }
@@ -203,7 +203,7 @@ namespace HLP2
      *********************************************************************/
     bool cmp_name_greater(CountryInfo const &left, CountryInfo const &right)
     {
-        if (std::string(left.name) < std::string(right.name))
+        if (std::string(left.name) > std::string(right.name))
         {
             return true;
         }
@@ -226,7 +226,7 @@ namespace HLP2
      *********************************************************************/
     bool cmp_pop_less(CountryInfo const &left, CountryInfo const &right)
     {
-        if (left.pop > right.pop)
+        if (left.pop < right.pop)
         {
             return true;
         }
@@ -249,7 +249,7 @@ namespace HLP2
      *********************************************************************/
     bool cmp_pop_greater(CountryInfo const &left, CountryInfo const &right)
     {
-        if (left.pop < right.pop)
+        if (left.pop > right.pop)
         {
             return true;
         }
