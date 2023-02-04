@@ -19,7 +19,7 @@
 #ifndef POINT_HPP
 #define POINT_HPP
 ////////////////////////////////////////////////////////////////////////////////
-#define PI  3.141592;
+#define PI 3.141592
 #include <iostream> // istream, ostream
 
 namespace hlp2
