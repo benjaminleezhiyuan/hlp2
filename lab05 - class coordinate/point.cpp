@@ -34,28 +34,17 @@ namespace
 
 namespace hlp2
 {
-
-    // define 3 constructors
-    Point::Point() : x{0.0}, y{0.0}
-    {
-        std::cout << __PRETTY_FUNCTION__ << '\n';
-    }
-
-    Point::Point(int a, int b) : x{a}, y{b}
-    {
-        std::cout << __PRETTY_FUNCTION__ << '\n';
-    }
-
-    Point::Point(double a, double b) : x{a}, y{b}
-    {
-        std::cout << __PRETTY_FUNCTION__ << '\n';
-    }
-
     // define 8 member functions
-    
+    double &Point::operator[](int index)
+    {
+        return (index == 0 ? x : y);
+    }
+    const double &Point::operator[](int index) const
+    {
+        return (index == 0 ? x : y);
+    }
 
     // define 15 non-member, non-friend functions
-
 
 } // end hlp2 namespace
 
