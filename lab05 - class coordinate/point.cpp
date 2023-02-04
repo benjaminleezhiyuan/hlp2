@@ -8,7 +8,7 @@
 \date    03-02-23
 
 \brief
-
+This file contains definitions to all the function operators
 **********************************************************************************/
 
 // Since your clients will not have access to this file, your initial
@@ -37,9 +37,10 @@ namespace hlp2
     // define 8 member functions
     /******************************************************************
      * @brief
-     *
+     * get coordinates based on index
      * @param index
-     * @return double&
+     * @return
+     * coordinate of point
      *********************************************************************/
     double &Point::operator[](int index)
     {
@@ -48,9 +49,10 @@ namespace hlp2
 
     /******************************************************************
      * @brief
-     *
+     * get coordinates based on index
      * @param index
-     * @return const double&
+     * @return
+     * coordinate of point
      *********************************************************************/
     const double &Point::operator[](int index) const
     {
@@ -59,9 +61,11 @@ namespace hlp2
 
     /******************************************************************
      * @brief
-     *
+     * overloads that add two Point s or Point and double
+     * Same behavior as built-in types.
      * @param other
-     * @return Point&
+     * @return
+     * Point object
      *********************************************************************/
     Point &Point::operator+=(const Point &other)
     {
@@ -72,9 +76,11 @@ namespace hlp2
 
     /******************************************************************
      * @brief
-     *
+     * overloads that add two Point s or Point and double
+     * Same behavior as built-in types.
      * @param scal
-     * @return Point&
+     * @return
+     * Point object
      *********************************************************************/
     Point &Point::operator+=(double scal)
     {
@@ -85,8 +91,9 @@ namespace hlp2
 
     /******************************************************************
      * @brief
-     *
-     * @return Point&
+     * Increment Point 's coordinates. Same behavior as built-in types.
+     * @return 
+     * Point object
      *********************************************************************/
     Point &Point::operator++()
     {
@@ -97,8 +104,9 @@ namespace hlp2
 
     /******************************************************************
      * @brief
-     *
-     * @return Point
+     * Increment Point 's coordinates. Same behavior as built-in types.
+     * @return 
+     * Point object
      *********************************************************************/
     Point Point::operator++(int)
     {
@@ -109,7 +117,7 @@ namespace hlp2
 
     /******************************************************************
      * @brief
-     *
+     * Decrement Point 's coordinates. Same behavior as built-in types.
      * @return Point&
      *********************************************************************/
     Point &Point::operator--()
@@ -121,7 +129,7 @@ namespace hlp2
 
     /******************************************************************
      * @brief
-     *
+     * Decrement Point 's coordinates. Same behavior as built-in types.
      *********************************************************************/
     Point Point::operator--(int)
     {
@@ -133,7 +141,7 @@ namespace hlp2
 
     /******************************************************************
      * @brief
-     *
+     * Return Point obtained by rotating Point by double degrees.
      * @param p
      * @param degrees
      * @return Point
@@ -148,7 +156,7 @@ namespace hlp2
 
     /******************************************************************
      * @brief
-     *
+     * Return distance between two Point s.
      * @param p1
      * @param p2
      * @return double
@@ -162,7 +170,10 @@ namespace hlp2
 
     /******************************************************************
      * @brief
-     *
+     * 6 functions returning Point obtained by
+     * adding/subtracting two Point s or Point and double or
+     * double and Point operands.
+
      * @param p1
      * @param p2
      * @return Point
@@ -199,7 +210,7 @@ namespace hlp2
 
     /******************************************************************
      * @brief
-     * negate operator coordinates.
+     * Return Point obtained by negating operand's coordinates.
      * @param p
      * @return
      * Point coordinates.
@@ -211,7 +222,7 @@ namespace hlp2
 
     /******************************************************************
      * @brief
-     * Returns mid point between 2 Points.
+     * Return Point midway between two Point s.
      * @param p1
      * @param p2
      * @return Point
@@ -223,7 +234,7 @@ namespace hlp2
 
     /******************************************************************
      * @brief
-     *
+     * Return double representing dot or scalar product of two Point operands.
      * @param p1
      * @param p2
      * @return double
@@ -235,7 +246,7 @@ namespace hlp2
 
     /******************************************************************
      * @brief
-     *
+     * 2 functions that return Point obtained by scaling Point and double operands.
      * @param p
      * @param scale
      * @return Point
@@ -251,7 +262,7 @@ namespace hlp2
 
     /******************************************************************
      * @brief
-     *
+     * Writes to output stream coordinates of Point in format (x, y) .
      * @param os
      * @param p
      * @return std::ostream&
@@ -264,7 +275,7 @@ namespace hlp2
 
     /******************************************************************
      * @brief
-     *
+     * Reads two double s as Point from input stream.
      * @param is
      * @param p
      * @return std::istream&

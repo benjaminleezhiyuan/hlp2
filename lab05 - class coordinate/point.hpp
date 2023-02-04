@@ -8,7 +8,8 @@
 \date    03-02-23
 
 \brief
-
+This file contains declaration of constructors, overloaded operators and 
+non-member, non-friend functions and Point class.
 **********************************************************************************/
 
 // make sure to provide file-level documentation and function-level
