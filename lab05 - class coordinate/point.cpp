@@ -35,16 +35,178 @@ namespace
 namespace hlp2
 {
     // define 8 member functions
+    /******************************************************************
+     * @brief
+     *
+     * @param index
+     * @return double&
+     *********************************************************************/
     double &Point::operator[](int index)
     {
         return (index == 0 ? x : y);
     }
+
+    /******************************************************************
+     * @brief
+     *
+     * @param index
+     * @return const double&
+     *********************************************************************/
     const double &Point::operator[](int index) const
     {
         return (index == 0 ? x : y);
     }
 
+    /******************************************************************
+     * @brief
+     *
+     * @param other
+     * @return Point&
+     *********************************************************************/
+    Point &Point::operator+=(const Point &other)
+    {
+        x += other.x;
+        y += other.y;
+        return *this;
+    }
+
+    /******************************************************************
+     * @brief
+     *
+     * @param scal
+     * @return Point&
+     *********************************************************************/
+    Point &Point::operator+=(double scal)
+    {
+        x += scal;
+        y += scal;
+        return *this;
+    }
+
+    /******************************************************************
+     * @brief
+     *
+     * @return Point&
+     *********************************************************************/
+    Point &Point::operator++()
+    {
+        ++x;
+        ++y;
+        return *this;
+    }
+
+    /******************************************************************
+     * @brief
+     *
+     * @return Point
+     *********************************************************************/
+    Point Point::operator++(int)
+    {
+        Point temp(*this);
+        ++(*this);
+        return temp;
+    }
+
+    /******************************************************************
+     * @brief
+     *
+     * @return Point&
+     *********************************************************************/
+    Point &Point::operator--()
+    {
+        --x;
+        --y;
+        return *this;
+    }
+
+    /******************************************************************
+     * @brief
+     *
+     *********************************************************************/
+    Point Point::operator--(int)
+    {
+        Point temp(*this);
+        --(*this);
+        return temp;
+    }
     // define 15 non-member, non-friend functions
+
+    /******************************************************************
+     * @brief
+     *
+     * @param p
+     * @param degrees
+     * @return Point
+     *********************************************************************/
+    Point operator%(const Point &p, double degrees)
+    {
+        double radian = degrees * PI / 180;
+        double x = p[0] * cos(radian) - p[1] * sin(radian);
+        double y = p[0] * sin(radian) - p[1] * cos(radian);
+        return Point(x, y);
+    }
+
+    /******************************************************************
+     * @brief
+     *
+     * @param p1
+     * @param p2
+     * @return double
+     *********************************************************************/
+    double operator/(const Point &p1, const Point &p2)
+    {
+        double x = p2[0] - p1[0];
+        double y = p2[1] - p1[1];
+        return sqrt(x * x + y * y);
+    }
+
+    /******************************************************************
+     * @brief
+     *
+     * @param p1
+     * @param p2
+     * @return Point
+     *********************************************************************/
+    Point operator+(const Point &p1, const Point &p2)
+    {
+        return Point(p1[0] + p2[0], p1[1] + p2[1]);
+    }
+
+    Point operator+(const Point &p, double scalar)
+    {
+        return Point(p[0] + scalar, p[1] + scalar);
+    }
+
+    Point operator+(double d, const Point &p)
+    {
+        return Point(p[0] + d, p[1] + d);
+    }
+
+    Point operator-(const Point &p1, const Point &p2)
+    {
+        return Point(p1[0] - p2[0], p1[1] - p2[1]);
+    }
+
+    Point operator-(const Point &p, double scalar)
+    {
+        return Point(p[0] - scalar, p[1] - scalar);
+    }
+
+    Point operator-(double d, const Point &p)
+    {
+        return Point(d - p[0], d - p[1]);
+    }
+
+    /******************************************************************
+     * @brief
+     *
+     * @param p
+     * @return Point
+     *********************************************************************/
+    Point operator-(const Point &p)
+    {
+        return Point(-p[0], -p[1]);
+    }
 
 } // end hlp2 namespace
 

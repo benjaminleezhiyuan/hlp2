@@ -19,7 +19,7 @@
 #ifndef POINT_HPP
 #define POINT_HPP
 ////////////////////////////////////////////////////////////////////////////////
-
+#define PI  3.141592;
 #include <iostream> // istream, ostream
 
 namespace hlp2
@@ -60,7 +60,6 @@ namespace hlp2
 	double operator/(const Point &p1, const Point &p2);
 	Point operator+(const Point &p1, const Point &p2);
 	Point operator+(const Point &p, double scalar);
-	Point operator+(const Point &other);
 	Point operator+(double d, const Point &p);
 	Point operator-(const Point &p1, const Point &p2);
 	Point operator-(const Point &p, double d);
