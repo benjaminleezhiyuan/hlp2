@@ -142,7 +142,7 @@ namespace hlp2
     {
         double radian = degrees * PI / 180;
         double x = p[0] * cos(radian) - p[1] * sin(radian);
-        double y = p[0] * sin(radian) - p[1] * cos(radian);
+        double y = p[0] * sin(radian) + p[1] * cos(radian);
         return Point(x, y);
     }
 
@@ -199,19 +199,86 @@ namespace hlp2
 
     /******************************************************************
      * @brief
-     *
+     * negate operator coordinates.
      * @param p
-     * @return Point
+     * @return
+     * Point coordinates.
      *********************************************************************/
     Point operator-(const Point &p)
     {
         return Point(-p[0], -p[1]);
     }
 
-} // end hlp2 namespace
+    /******************************************************************
+     * @brief
+     * Returns mid point between 2 Points.
+     * @param p1
+     * @param p2
+     * @return Point
+     *********************************************************************/
+    Point operator^(const Point &p1, const Point &p2)
+    {
+        return Point((p1[0] + p2[0]) / 2, (p1[1] + p2[1]) / 2);
+    }
 
-///////////////////////////////////////////////////////////////////////////////
-// define private stuff here [if any] in this anonymous namespace ...
-namespace
-{
+    /******************************************************************
+     * @brief
+     *
+     * @param p1
+     * @param p2
+     * @return double
+     *********************************************************************/
+    double operator*(const Point &p1, const Point &p2)
+    {
+        return p1[0] * p2[0] + p1[1] * p2[1];
+    }
+
+    /******************************************************************
+     * @brief
+     *
+     * @param p
+     * @param scale
+     * @return Point
+     *********************************************************************/
+    Point operator*(const Point &p, double scale)
+    {
+        return Point(p[0] * scale, p[1] * scale);
+    }
+    Point operator*(double scale, const Point &p)
+    {
+        return Point(p[0] * scale, p[1] * scale);
+    }
+
+    /******************************************************************
+     * @brief
+     *
+     * @param os
+     * @param p
+     * @return std::ostream&
+     *********************************************************************/
+    std::ostream &operator<<(std::ostream &os, const Point &p)
+    {
+        os << '(' << p[0] << ", " << p[1] << ')';
+        return os;
+    }
+
+    /******************************************************************
+     * @brief
+     *
+     * @param is
+     * @param p
+     * @return std::istream&
+     *********************************************************************/
+    std::istream &operator>>(std::istream &is, Point &p)
+    {
+        is >> p[0] >> p[1];
+        return is;
+    }
+    // end hlp2 namespace
+
+    ///////////////////////////////////////////////////////////////////////////////
+    // define private stuff here [if any] in this anonymous namespace ...
+    namespace
+    {
+    }
 }

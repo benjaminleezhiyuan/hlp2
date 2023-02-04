@@ -19,7 +19,7 @@
 #ifndef POINT_HPP
 #define POINT_HPP
 ////////////////////////////////////////////////////////////////////////////////
-#define PI 3.141592
+#define PI 3.14159265358979323846
 #include <iostream> // istream, ostream
 
 namespace hlp2
@@ -28,7 +28,7 @@ namespace hlp2
 	{
 	public:
 		// declare constructors (3)
-		Point() {}
+		Point() : x(0), y(0){};
 		Point(double arr[]) : x(arr[0]), y(arr[1]){};
 		Point(double x, double y) : x(x), y(y){};
 
