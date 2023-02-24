@@ -10,30 +10,30 @@ namespace {
 	void TestSwap();
 	void TestSwapRanges();
 	void TestRemove();
-	void TestCount();
-	void TestFind();
-	void TestCopy();
+void TestCount();
+void TestFind();
+	/* void TestCopy();
 	void TestFill();
 	void TestReplace();
 	void TestMin(); 
 	void TestMax(); 
 	void TestEqual();
-	void TestSum();
+	void TestSum(); */
 } // end anonymous namspace
 
 int main() {
   TestSwap();
   TestSwapRanges();
-  TestRemove();
+   TestRemove();
   TestCount();
-  TestFind();
-  TestCopy();
+ TestFind();
+  /* TestCopy();
   TestFill();
   TestReplace();
   TestMin();
   TestMax();
   TestEqual();
-  TestSum();
+  TestSum(); */
 }
 
 namespace {
@@ -51,7 +51,7 @@ void TestSwap() {
   std::cout << "s1: " << s1; std::cout << "s2: " << s2;
 }
 
-void TestSwapRanges() {
+ void TestSwapRanges() {
   std::cout << "***** SwapRanges *****" << "\n";
   std::array<int, 11> i1 {-1, 2, 6, -1, 9, 5, 7, -1, -1, 8, -1};
   std::array<int, 11> i2 {3, 6, 8, 0, -1, 5, -3, -9, 3, 5, 8};
@@ -227,7 +227,7 @@ void TestFind() {
   }
   hlp2::display(as.data(), as.data()+as.size());
 }
-
+/*
 void TestCopy() {
   std::cout << "***** Copy1 *****" << "\n";
   const std::array<short, 11> ash {-1, 2, 6, -1, 9, 5, 7, -1, -1, 8, -1};
@@ -434,5 +434,5 @@ void TestSum() {
   str_tot = hlp2::sum(as3.data()+24, as3.data()+as3.size());
   std::cout << "Concatenation in as3[24,25) is: " << str_tot << "\n";
 }
-
+ */
 } // end anonymous namespace

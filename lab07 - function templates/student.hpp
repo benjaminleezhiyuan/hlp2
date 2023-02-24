@@ -1,3 +1,4 @@
+#include <iostream>
 #ifndef STUDENT_HPP
 #define STUDENT_HPP
 
