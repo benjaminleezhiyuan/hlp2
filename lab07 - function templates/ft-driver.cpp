@@ -12,9 +12,9 @@ namespace {
 	void TestRemove();
 void TestCount();
 void TestFind();
-	/* void TestCopy();
+	void TestCopy();
 	void TestFill();
-	void TestReplace();
+	/*void TestReplace();
 	void TestMin(); 
 	void TestMax(); 
 	void TestEqual();
@@ -27,9 +27,9 @@ int main() {
    TestRemove();
   TestCount();
  TestFind();
-  /* TestCopy();
+   TestCopy();
   TestFill();
-  TestReplace();
+  /*TestReplace();
   TestMin();
   TestMax();
   TestEqual();
@@ -227,7 +227,7 @@ void TestFind() {
   }
   hlp2::display(as.data(), as.data()+as.size());
 }
-/*
+
 void TestCopy() {
   std::cout << "***** Copy1 *****" << "\n";
   const std::array<short, 11> ash {-1, 2, 6, -1, 9, 5, 7, -1, -1, 8, -1};
@@ -266,7 +266,7 @@ void TestFill() {
   hlp2::fill(as.data(), as.data()+as.size(), "*");
   hlp2::display(as.data(), as.data()+as.size());
 }
-
+/*
 void TestReplace() {
   std::cout << "***** Replace1 *****" << "\n";
   std::array<int, 11> ai {-1, 2, 6, -1, 9, 5, 7, -1, -1, 8, -1};

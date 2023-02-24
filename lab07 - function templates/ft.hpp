@@ -111,25 +111,53 @@ namespace hlp2
   typename std::iterator_traits<T1>::difference_type
   count(T1 first, T1 last, const T2 &value);
 
+  /*!******************************************************************
+   * \brief
+   * Finds specified element in a range of elements
+   *
+   * \param first
+   * Start of range
+   *
+   * \param last
+   * End of range
+   *
+   * \param val
+   * Value to find in range
+   *
+   * \return T1
+   * Iterator to first element in range that equates to val.
+   * If no element exists return last.
+   *********************************************************************/
+  template <class T1, class T2>
+  T1 find(T1 first, T1 last, const T2 &val);
+
 /*!******************************************************************
  * \brief 
- * Finds specified element in a range of elements
- *
- * \param first 
- * Start of range 
+ * Copy elements in range to another range
+ * \param first
+ * Start of range
  * 
  * \param last 
  * End of range
  * 
- * \param val
- * Value to find in range
+ * \param first2 
+ * Start of second range
  * 
- * \return T1 
- * Iterator to first element in range that equates to val.
- * If no element exists return last.
+ * \return T2
+ * Iterator to the end of the second range. 
  *********************************************************************/
-  template <class T1, class T2>
-  T1 find(T1 first, T1 last, const T2 &val);
+  template <typename T1, typename T2>
+  T2 copy(T1 first, T1 last, T2 first2);
+
+/*!******************************************************************
+ * \brief 
+ * 
+ * \param first 
+ * \param last 
+ * \param value 
+ *********************************************************************/
+  template <typename T1, typename T2>
+  void fill(T1 first, T1 last, const T2& value);
 
   // Provide DEFINITIONS for each function template declared above ...
 
@@ -151,7 +179,7 @@ namespace hlp2
     std::cout << std::endl;
   }
 
-  template <class T1, class T2>
+  template <typename T1, typename T2>
   T2 swap_ranges(T1 first1, T1 last1, T2 first2)
   {
     while (first1 != last1)
@@ -202,6 +230,28 @@ namespace hlp2
       ++first;
     }
     return last;
+  }
+
+  template <class T1, class T2>
+  T2 copy(T1 first, T1 last, T2 first2)
+  {
+    while (first != last)
+    {
+      *first2 = *first;
+      ++first2;
+      ++first;
+    }
+    return first2;
+  }
+
+  template <typename T1, typename T2>
+  void fill(T1 first, T1 last, const T2& val)
+  {
+    while (first != last)
+    {
+      *first=val;
+      ++first;
+    }
   }
 }
 
