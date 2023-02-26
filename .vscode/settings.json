@@ -51,6 +51,7 @@
         "array": "cpp",
         "vector": "cpp",
         "forward_list": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "algorithm": "cpp"
     }
 }

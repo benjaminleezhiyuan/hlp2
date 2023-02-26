@@ -14,11 +14,11 @@ void TestCount();
 void TestFind();
 	void TestCopy();
 	void TestFill();
-	/*void TestReplace();
+	void TestReplace();
 	void TestMin(); 
 	void TestMax(); 
 	void TestEqual();
-	void TestSum(); */
+	void TestSum(); 
 } // end anonymous namspace
 
 int main() {
@@ -29,11 +29,11 @@ int main() {
  TestFind();
    TestCopy();
   TestFill();
-  /*TestReplace();
+  TestReplace();
   TestMin();
   TestMax();
   TestEqual();
-  TestSum(); */
+  TestSum(); 
 }
 
 namespace {
@@ -266,7 +266,7 @@ void TestFill() {
   hlp2::fill(as.data(), as.data()+as.size(), "*");
   hlp2::display(as.data(), as.data()+as.size());
 }
-/*
+
 void TestReplace() {
   std::cout << "***** Replace1 *****" << "\n";
   std::array<int, 11> ai {-1, 2, 6, -1, 9, 5, 7, -1, -1, 8, -1};
@@ -434,5 +434,5 @@ void TestSum() {
   str_tot = hlp2::sum(as3.data()+24, as3.data()+as3.size());
   std::cout << "Concatenation in as3[24,25) is: " << str_tot << "\n";
 }
- */
+ 
 } // end anonymous namespace
