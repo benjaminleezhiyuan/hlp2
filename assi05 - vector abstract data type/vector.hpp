@@ -1,3 +1,15 @@
+/*!******************************************************************
+ * \file      vector.hpp
+ * \author    Benjamin Lee
+ * \par       DP email: benjaminzhiyuan.lee\@digipen.edu.sg
+ * \par       Course: CSD1171
+ * \par       Section: A
+ * \par      
+ * \date      28-02-2023
+ * 
+ * \brief  This file contains declarations for functions defined in vector.cpp
+ *********************************************************************/
+
 // make sure to have a file-level Doxygen documentation block AND
 // function-level documentation block for each function that your
 // client will be using!!!

@@ -1,15 +1,15 @@
-/*!*****************************************************************************
- \file vector.cpp
- \author Sun Wei Hao
- \par DP email: s.weihao@digipen.edu
- \par Course: HLP2
- \par Section: A
- \par Programming Assignment #5
- \date 24-02-2023
- \brief This file contains the implemention of the functions used of classes vector in vector.hpp  
-
-*******************************************************************************/
-
+/*!******************************************************************
+ * \file      vector.cpp
+ * \author    Benjamin Lee
+ * \par       DP email: benjaminzhiyuan.lee\@digipen.edu.sg
+ * \par       Course: CSD1171
+ * \par       Section: A
+ * \par      
+ * \date      28-02-2023
+ * 
+ * \brief  This file contains the implemention of the functions used of 
+ *         classes vector in vector.hpp.
+ *********************************************************************/
 #include "vector.hpp"
 // make sure to have a file-level Doxygen documentation block!!!
 // read the specs to know which standard library headers cannot be included!!!
