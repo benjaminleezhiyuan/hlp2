@@ -4,7 +4,7 @@
  * \par       DP email: benjaminzhiyuan.lee\@digipen.edu.sg
  * \par       Course: CSD1171
  * \par       Section: A
- * \par      
+ * \par       Assignment 05
  * \date      28-02-2023
  * 
  * \brief  This file contains declarations for functions defined in vector.cpp
