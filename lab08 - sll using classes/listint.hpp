@@ -115,7 +115,7 @@ namespace hlp2
         static size_type object_counter;
 
         // Private member function to create a new node
-        Node *new_node(value_type data);
+        Node *new_node(value_type data) const;
     };
 
     std::ostream &operator<<(std::ostream &os, const ListInt &rhs);

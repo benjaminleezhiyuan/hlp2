@@ -39,7 +39,7 @@ namespace hlp2
   \param[in] data The value to be stored in the new node
   \return A pointer to the newly created node
   *******************************************************************************/
-  ListInt::Node *ListInt::new_node(value_type data)
+  ListInt::Node *ListInt::new_node(value_type data) const
   {
     return new Node(data);
   }
