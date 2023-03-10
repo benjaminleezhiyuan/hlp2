@@ -28,11 +28,16 @@ namespace hlp2
         {
             int data;   // the actual data in the node
             Node *next; // pointer to the next Node
+            Node(value_type value) : data(value), next(nullptr) {}
         };
+
         Node *head{nullptr};  // pointer to the head of the list
         Node *tail{nullptr};  // pointer to the last node
         size_type counter{0}; // number of nodes on the list
-        Node *new_node(value_type data) const;
+        Node *new_node(value_type data) const
+        {
+            return new Node(data);
+        }
 
     public:
         // interface
@@ -42,17 +47,7 @@ namespace hlp2
 
         bool empty() const;
 
-        size_type size() const
-        {
-            size_type count = 0;
-            Node *current = head;
-            while (current != nullptr)
-            {
-                ++count;
-                current = current->next;
-            }
-            return count;
-        }
+        size_type size() const;
 
         // three ctors:
         ListInt() : head(nullptr), tail(nullptr), counter(0)
@@ -223,18 +218,19 @@ namespace hlp2
     }
 
     ListInt::size_type ListInt::size() const
-{
-    size_type count = 0;
-    Node *current = head;
-    while (current != nullptr) {
-        ++count;
-        current = current->next;
+    {
+        size_type count = 0;
+        Node *current = head;
+        while (current != nullptr)
+        {
+            ++count;
+            current = current->next;
+        }
+        return count;
     }
-    return count;
-}
 
-bool ListInt::empty() const
-{
-    return head == nullptr;
-}
+    bool ListInt::empty() const
+    {
+        return head == nullptr;
+    }
 }
