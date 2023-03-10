@@ -53,6 +53,7 @@
         "forward_list": "cpp",
         "list": "cpp",
         "algorithm": "cpp",
-        "optional": "cpp"
+        "optional": "cpp",
+        "*.tpp": "cpp"
     }
 }

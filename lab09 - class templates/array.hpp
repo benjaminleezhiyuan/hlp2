@@ -4,14 +4,9 @@
 //-------------------------------------------------------------------------
 
 #include <cstddef> // for size_t
-// Don't include <array> [remove this line!!!]
-// Otherwise, your submission will not compile!!!
-
 namespace hlp2
 {
-
     // Define class template Array<T,N> and document each member function
-
     template <typename T, size_t N>
     class Array
     {
@@ -26,35 +21,38 @@ namespace hlp2
         using const_iterator = const value_type *;
 
     public:
+        Array(std::initializer_list<T> values)
+        {
+            if (values.size() != N)
+            {
+                throw std::invalid_argument("Wrong number of arguments");
+            }
+            std::copy(values.begin(), values.end(), elements);
+        }
+        Array() : elements{} {}
         iterator begin();
         const_iterator begin() const;
         iterator end();
         const_iterator end() const;
-        const_iterator cbegin();
-        const_iterator cend();
+        const_iterator cbegin() const;
+        const_iterator cend() const;
         reference front();
-        const_reference front();
+        const_reference front() const;
         reference back();
-        const_reference back();
+        const_reference back() const;
         reference operator[](size_type index);
-        const_reference operator[](size_type index);
-        bool empty const();
+        const_reference operator[](size_type index) const;
+        bool empty() const;
         pointer data();
-        const_pointer data();
-        size_type size const();
+        const_pointer data() const;
+        size_type size() const;
         void fill(const_reference value);
         void swap(Array<T, N> &other) noexcept(std::is_nothrow_swappable_v<value_type>);
 
     private:
-        template <typename T>
-        struct ValueWithComment
-        {
-            T value;
-            std::string comment;
-        };
-        value_type data[N];
+        value_type elements[N];
     };
-    // Declare and document non-member functions
+    //Declare and document non-member functions
     template <typename T, size_t N>
     void swap(Array<T, N> &lhs, Array<T, N> &rhs) noexcept(noexcept(lhs.swap(rhs)));
 
@@ -72,8 +70,7 @@ namespace hlp2
 
 // EVERY member and non-member function must be defined
 // in separate file array.tpp
-#include "array.tpp"
 
 } // end namespace hlp2
-
+#include "array.tpp"
 #endif // end ARRAY_HPP_
