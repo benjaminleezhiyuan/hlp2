@@ -7,7 +7,8 @@
  * \par       Lab 09
  * \date      12-03-2023
  * 
- * \brief  
+ * \brief     Contains definitions for the functions needed in clone of
+ *            std::array
  *********************************************************************/
 #include "array.hpp"
 
