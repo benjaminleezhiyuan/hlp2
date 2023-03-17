@@ -1,5 +1,17 @@
-// This file must contain definitions of ALL member and non-member functions
-// of class template Array<T,N>
+/*!******************************************************************
+ * \file      array.tpp
+ * \author    Benjamin Lee
+ * \par       DP email: benjaminzhiyuan.lee\@digipen.edu.sg
+ * \par       Course: CSD1171
+ * \par       Section: A
+ * \par       Lab 09
+ * \date      12-03-2023
+ * 
+ * \brief     Contains definitions for the functions needed in clone of
+ *            std::array
+ *********************************************************************/
+#include "array.hpp"
+
 namespace hlp2
 {
     template <typename T, size_t N>
