@@ -1,74 +1,14 @@
-/*!************************************************************************
-\file sllist.tpp
-\author Muhammad Farhan Bin Ahmad
-\par email: b.muhammadfarhan@digipen.edu
-\par Course: CSD 1171
-\par Assignment 7 - Single link-list template(AKA COPY FOR FUN. PRAISE FUCKY)
-\date 16-03-2023
-\brief This script contains:
-      1 Class:
-      sllist
-        This class contain:
-        1 Struct
-        Node
-          This Node contain:
-            Node *next{nullptr}; // pointer to next Node
-            Node(T const &);     // conversion ctor to initialize Node object
-            ~Node();             // dtor
-            static size_type node_counter; // declaration
-            Node *new_node( const_reference) const;//Create new node
-            Node *head{nullptr};//DECLARE HEAD
-            Node *tail{nullptr};//DECLARE TAIL
-            //End of Node
-        sllist();//def Constructor
-        sllist(sllist const &rhs);//Copy Assignment
-        sllist(std::initializer_list<T> const &);//Copy initializer
-        sllist(const_pointer begin, const_pointer end);//Non default Copy constructor
-        ~sllist();//Destructor
-
-        int data(Node const *p);        // accessor to node's data
-        void data(Node *p, int newval); // mutator to node's data
-        Node *next(Node *p);            // pointer to successor node
-        Node *next(Node const *p) const;// pointer to successor node
-        bool empty() const;// Check if sllist is empty
-        size_t size() const;// return size sllist
-        void push_front(value_type const &ptr_sll);//Add a node in the front of the list
-        void push_back(value_type const &ptr_sll);//Add a node in the back of the list
-        void remove_first(int value);//Remove first element in the list
-        void clear();//Clear sllist
-        void swap(sllist<T> &rhs);//Swap sllist
-        reference front();//Return fist element in the list
-        const_reference front() const;//Return fist element in the list
-        void pop_front();//Return value of the first node and destory it
-
-        //OPERATOR
-        sllist<value_type> &operator+=(sllist const &);//sllist += sllist
-        sllist<value_type> &operator+=(std::initializer_list<value_type> const &);sllist += initializer_list
-        sllist &operator=(sllist const &rhs);// sllist = sllist
-        sllist &operator=(std::initializer_list<value_type> const &_list);// sllist = initializer_list
-
-        reference operator[](size_type);sllist[]
-        const_reference operator[](size_type) const;sllist[]
-
-        static size_t node_count();//Count total node
-        static size_t object_count();//Coun total object(sllist)
-
-        template <typename U>
-        friend std::ostream &operator<<(std::ostream &os, const sllist<U> &rhs);
-    };
-    NON MEMBER FUNCTION
-    template <typename T>
-    void swap(sllist<T> &lhs, sllist<T> &rhs);
-    template <typename T>
-    sllist<T> operator+(const std::initializer_list<T> &lhs, const sllist<T> &rhs);
-    template <typename T>
-    sllist<T> operator+(const sllist<T> &lhs, const std::initializer_list<T> &rhs);
-    template <typename T>
-    sllist<T> operator+(const sllist<T> &lhs, const sllist<T> &rhs);
-
-\brief
-This source file implements functions for a template singly-linked list.
-**************************************************************************/
+/*!******************************************************************
+ * \file      sllist.tpp
+ * \author    Benjamin Lee
+ * \par       DP email: benjaminzhiyuan.lee\@digipen.edu.sg
+ * \par       Course: CSD1171
+ * \par       Section: A
+ * \par       Assignment 07
+ * \date      21-03-2023
+ * 
+ * \brief     This source file implements functions for a template singly-linked list.
+ *********************************************************************/
 #include "sllist.hpp"
 
 namespace hlp2
@@ -370,7 +310,7 @@ namespace hlp2
   template <typename T>
   sllist<T> operator+(const std::initializer_list<T> &lhs, const sllist<T> &rhs)
   {
-    sllist<T> fucky{lhs};
+    sllist<T> random{lhs};
     sllist<T> new_list{};
 
     for (const T &s : lhs)
@@ -389,7 +329,7 @@ namespace hlp2
   template <typename T>
   sllist<T> operator+(const sllist<T> &lhs, const std::initializer_list<T> &rhs)
   {
-    sllist<T> fucky{lhs};
+    sllist<T> random{lhs};
     sllist<T> new_list{lhs};
 
     for (const T &s : rhs)
@@ -402,7 +342,7 @@ namespace hlp2
   template <typename T>
   sllist<T> operator+(const sllist<T> &lhs, const sllist<T> &rhs)
   {
-    sllist<T> fucky{lhs};
+    sllist<T> random{lhs};
     sllist<T> new_list{};
     typename sllist<T>::Node *temp_rhs = rhs.head;
     typename sllist<T>::Node *temp_lhs = lhs.head;

@@ -1,5 +1,14 @@
-// File header documentation is required!!!
-
+/*!******************************************************************
+ * \file      sllist.hpp
+ * \author    Benjamin Lee
+ * \par       DP email: benjaminzhiyuan.lee\@digipen.edu.sg
+ * \par       Course: CSD1171
+ * \par       Section: A
+ * \par       Assignment 07
+ * \date      21-03-2023
+ * 
+ * \brief     This source file implements functions for a template singly-linked list.
+ *********************************************************************/
 // Follow other guidelines and practices from previous assessments
 #ifndef SLLIST_HPP_
 #define SLLIST_HPP_
