@@ -7,7 +7,8 @@
  * \par       Lab 10
  * \date      17-03-2023
  *
- * \brief     This file contains test cases for
+ * \brief     This file contains test cases for 5 attempts to divide by 
+ *            zero.
  *********************************************************************/
 #include <iostream>
 #include <sstream>
@@ -16,6 +17,11 @@ namespace hlp2
 {
     class division_by_zero : public std::exception {
 public:
+/*!******************************************************************
+ * \brief  Construct a new division by zero object
+ * 
+ * \param numerator numerator for division
+ *********************************************************************/
     division_by_zero(int numerator) {
         std::stringstream ss;
         ss << "Division by zero: " << numerator << " / 0!\n";
@@ -23,6 +29,11 @@ public:
         
     }
 
+/*!******************************************************************
+ * \brief  returns error message for division_by_zero
+ * 
+ * \return const char* 
+ *********************************************************************/
     const char* what() const noexcept override {
         return message.c_str();
     }
@@ -33,6 +44,11 @@ private:
 
 class invalid_input : public std::exception {
 public:
+/*!******************************************************************
+ * \brief  exception thrown when input is invalid
+ * 
+ * \return const char* 
+ *********************************************************************/
     const char* what() const noexcept override {
         return "Invalid input!";
     }
@@ -42,6 +58,19 @@ class stream_wrapper {
 public:
     explicit stream_wrapper(std::istream &is) : is_(is) {}
 
+/*!******************************************************************
+ * \brief  Construct a new stream wrapper object
+ * 
+ * \param is 
+ *********************************************************************/
+    explicit stream_wrapper(std::istream &is) : is_(is) {}
+
+/*!******************************************************************
+ * \brief  overloaded operator>> for stream_wrapper class
+ * 
+ * \param value 
+ * \return stream_wrapper& 
+ *********************************************************************/
     template<typename T>
     stream_wrapper &operator>>(T &value) {
         if (!(is_ >> value)) {
@@ -54,6 +83,13 @@ private:
     std::istream &is_;
 };
 
+/*!******************************************************************
+ * \brief  Test function for div_1
+ * 
+ * \param numerator 
+ * \param denominator 
+ * \param divide1 
+ *********************************************************************/
     void test1(int numerator, int denominator, bool (*divide1)(int, int, int &))
     {
         int value;
@@ -70,6 +106,13 @@ private:
         }
     }
 
+/*!******************************************************************
+ * \brief  Test function for div_2
+ * 
+ * \param numerator 
+ * \param denominator 
+ * \param divide2 
+ *********************************************************************/
     template <typename F>
     void test2(int numerator, int denominator, F divide2)
     {
@@ -87,6 +130,13 @@ private:
         }
     }
 
+/*!******************************************************************
+ * \brief  Test function for div_3
+ * 
+ * \param numerator 
+ * \param denominator 
+ * \param divide3 
+ *********************************************************************/
     template <typename F>
     void test3(int numerator, int denominator, F divide3)
     {
@@ -105,6 +155,13 @@ private:
         }
     }
 
+/*!******************************************************************
+ * \brief  Test function for div_4
+ * 
+ * \param numerator 
+ * \param denominator 
+ * \param divide4 
+ *********************************************************************/
     template <typename F>
     void test4(int numerator, int denominator, F divide4)
     {
@@ -122,6 +179,13 @@ private:
         }
     }
 
+/*!******************************************************************
+ * \brief  Test function for div_5
+ * 
+ * \param numerator 
+ * \param denominator 
+ * \param divide5 
+ *********************************************************************/
     template <typename F>
     void test5(int numerator, int denominator, F divide5)
     {
