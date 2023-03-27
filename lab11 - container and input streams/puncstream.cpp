@@ -1,23 +1,15 @@
-/******************************************************************************/
-/*!
-\file   puncstream.cpp
-\author Muhammad Farhan Bin Ahmad
-\par    email: b.muhammadfarhan@digipen.edu
-\par    DigiPen login: b.muhammadfarhan
-\par    Course: CS1170
-\par    Section A
-\par    Lab 10: Defining Semi-Realistic Input Stream
-\date   25/03/2022
-\brief
-    whitespace - Set what is white space
-    add_whitespace - add char that is define is a whitespace
-    is_whitespace - check if the char is a whitespace
-    case_sensitive - set stream's case-sensitivity
-    is_case_sensitive - return case sensitivity
-    operator>> - process word from text file and place it in string
-    operator bool() - ???
-    print - print out the text
-*/
+/*!******************************************************************
+ * \file      puncstream.cpp
+ * \author    Benjamin Lee
+ * \par       DP email: benjaminzhiyuan.lee\@digipen.edu.sg
+ * \par       Course: CSD1171
+ * \par       Section: A
+ * \par       Lab 11
+ * \date      27-03-2023
+ * 
+ * \brief     Contains function declarations to count number of distinctive words
+ *            occur in a text file.
+ *********************************************************************/
 #include "puncstream.hpp"
 
 namespace hlp2
