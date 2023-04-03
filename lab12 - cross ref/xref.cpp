@@ -1,76 +1,116 @@
-// File header documentation is required!!!
+/*!******************************************************************
+ * \file      xref.cpp
+ * \author    Benjamin Lee
+ * \par       DP email: benjaminzhiyuan.lee\@digipen.edu.sg
+ * \par       Course: CSD1171
+ * \par       Section: A
+ * \par       Lab 12
+ * \date      04-04-2023
+ * 
+ * \brief     This file contains the definitions of functions to obtain and print out the number of 
+occurrances of all the words in a std::map along with their locations
+ *********************************************************************/
 
-// This file must contain definitions of ALL member functions of class hlp2::punc_stream.
-
-// Don't forget to add the definition of function hlp2::print that was declared in puncstream.hpp!!!
 #include "xref.hpp"
+#include "puncstream.hpp"
 
 namespace hlp2 {
-	using VPII = std::vector<std::pair<int, int>>;
 
-	// find all the line and word position pairs that refer
-// to each word in the input file
-// return a map and an int as a pair ...
-	std::pair<std::map<std::string, std::vector<std::pair<int, int>>>, int> xref(std::string const& filename, std::string const& whitespace, bool case_sensitivity, std::set<std::string> const& exclude) {
+    using VPII = std::vector<std::pair<int,int>>;
 
-		// define a map from string to vector<pair<int,int>>
-		std::pair<std::map<std::string, std::vector<std::pair<int, int>>>, int> ret;
+    /***************************************************************************/
+    /*!
+    \brief
+        Function xref take a string indicating a filename and the characters to be ignored
+        along with a boolean to determine case sensitivity and specific strings to be excluded.
+        The function returns a pair contains the number of occurrances of all the words along
+        with their locations.
+    \param[in] filename
+        The string containing the name of the file to be read
 
-		// Open file stream
-		std::ifstream ifs{ filename };
+    \param[in] whitespace
+        The string of characters to be ignored
 
-		hlp2::punc_stream ps{ ifs };
-		ps.whitespace(whitespace);
-		ps.case_sensitive(case_sensitivity);
+    \param[in] case_sensitivity
+        Boolean determining if uppercase and lowercase letters are seen as unique
 
-		std::map<std::string, VPII> sm; // xref table
+    \param[in] exclude
+        The words to be ignored
 
-		int lineNum = 1;
-		int wordPos = 1;
-		bool excluded = false;
+    \return
+        The a std::pair consisting of a std::map<std::string,VPII> and an int
+    */
+    /**************************************************************************/
 
-		// purge whitespace from line and split into words ...
-		for (std::vector<std::string> line_words; ps >> line_words; ) {
-			// write the words and associated counts
-			for (std::string const& word : line_words) {
+    std::pair<std::map<std::string, VPII>,int>xref(std::string const& filename,
+                                                   std::string const& whitespace,
+                                                   bool case_sensitivity,
+                                                   std::set<std::string> const& exclude) 
+    {
+        //========================
+        //Variable Declarations
+        int linecount = 1;
+        int wordcount = 0;
+        std::map<std::string, VPII> ret;
+        //========================
+        //Preparing for >>
+        std::ifstream in(filename);
+        if(!in.is_open()){
+            std::cerr<< "Failed to open file\n";
+        }
+        hlp2::punc_stream temp{in};
+        temp.whitespace(whitespace);
+        temp.case_sensitive(case_sensitivity);
+        //========================
+        //For loop to remove all the whitespaces
+        //Iterates line by line
+        for (std::vector<std::string> words; temp >> words;)
+        {
+            wordcount = 0;
+            for (std::string const &word : words){
+                if(!exclude.count(word)){
+                    wordcount++;
+                    ret[word].push_back(std::make_pair(linecount, wordcount));
+                }
+            }
+            linecount++;
+        }
+            linecount--;
+            in.close();
+            return std::make_pair(ret, linecount);
+    }
 
-				for (std::string const& exclude_word : exclude) {
-					if (word == exclude_word) {
-						excluded = true;
-						break;
-					}
-				}
-				if (excluded) { excluded = false; continue; }
+    /***************************************************************************/
+    /*!
+    \brief
+        Outputs a std::map containing the number of occurrances of all the words along
+        with their locations in a specified format.
+    \param[in] words
+        the std::map to be output
 
-				sm[word].push_back(std::make_pair(lineNum, wordPos));
-				++wordPos;
-			}
-			++lineNum;
-			wordPos = 1;
-		}
+    \return
+        NIL
+    */
+    /**************************************************************************/
 
-		ifs.close();
+    void print_wordmap(std::map<std::string, VPII> const& words) {
+        for (std::pair<std::string, VPII> temp : words) {
+            std::cout << "\"" << temp.first << "\" occurs " << temp.second.size();
+            if (temp.second.size() > 1){
+                std::cout << " times";
+            }
+            else{
+                std::cout <<" time";
+            }
+            std::cout << " and is located at: " << std::endl;
+            //For more than one occurrance
+            for(size_t i = 0; i < temp.second.size(); i++){
+                std::cout << "\tline: " << temp.second[i].first;
+                std::cout << ", position: " << temp.second[i].second << std::endl;
+            }
+        }
 
-		ret.first = sm;
-		ret.second = lineNum;
-		std::pair<std::map<std::string, std::vector<std::pair<int, int>>>, int> result;
-		result.first = sm;
-		result.second = lineNum;
-		return result;
+    }
 
-	} // end function xref
 
-	void print_wordmap(std::map<std::string, std::vector<std::pair<int, int>>> const& words) {
-		std::map<std::string, std::vector<std::pair<int, int>>>::iterator it;
-
-		for (auto const& word : words)
-		{
-			std::cout << "\"word.first\"" << " occurs " << word.second.size() << "and is located at:" << '\n';
-			for (auto const& loc : word.second) {
-				std::cout << "  line" << loc.first << ", position " << loc.second << '\n';
-			}
-		}
-
-	}
-
-} // end namespace
+}
